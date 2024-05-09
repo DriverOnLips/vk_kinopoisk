@@ -36,9 +36,7 @@ export class Api {
 
 	getFilmsForList = async (
 		page: number,
-		limit: number,
 		filmsAge?: string,
-		filmsYear?: string,
 		countryName?: string,
 	): Promise<any> => {
 		const configItem = this.config.find(
@@ -54,7 +52,6 @@ export class Api {
 			'name',
 			'rating',
 			'poster',
-			'videos',
 			'year',
 			'genres',
 		];
@@ -75,9 +72,8 @@ export class Api {
 
 		const params = {
 			page: page,
-			limit: limit,
+			limit: 30,
 			...(filmsAge && { ageRating: filmsAge }),
-			...(filmsYear && { year: filmsYear }),
 			...(countryName && { 'countries.name': countryName }),
 		};
 
@@ -143,7 +139,7 @@ export class Api {
 
 		const params = {
 			page: 1,
-			limit: 250,
+			limit: 25,
 			movieId: id,
 		};
 
