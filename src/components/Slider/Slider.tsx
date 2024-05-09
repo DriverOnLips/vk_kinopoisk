@@ -1,26 +1,34 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import ReactSlider from 'react-slider';
-import { useApp } from 'hooks/useApp';
 
-function FilmsAgeSelector() {
-	const { filmAge, setFilmAge } = useApp();
+type SliderProps = {
+	item: number;
+	onSliderChange: (item: number) => void;
+	onButtonClick: () => void;
+};
 
-	const [films, setFilms] = useState<number>(filmAge);
+const Slider: React.FC<SliderProps> = ({
+	item,
+	onSliderChange,
+	onButtonClick,
+}) => {
 	const [showButton, setShowButton] = useState<boolean>(false);
 
-	const handleSliderChange = (newAge: number) => {
-		if (newAge !== films) {
-			setFilms(newAge);
-			setShowButton(true);
-		}
-	};
+	const onChange = useCallback(() => {
+		setShowButton(true);
+		onSliderChange;
+	}, [onSliderChange]);
 
-	const handleButtonClick = () => {
-		setFilmAge(films);
+	const stopPropagation = useCallback(
+		(e: React.MouseEvent<HTMLElement, MouseEvent>) => e.stopPropagation(),
+		[],
+	);
+
+	const onClick = useCallback(() => {
 		setShowButton(false);
-		document.body.click();
-	};
+		onButtonClick;
+	}, [onButtonClick]);
 
 	return (
 		<DropdownButton
@@ -38,12 +46,12 @@ function FilmsAgeSelector() {
 					justifyContent: 'center',
 					margin: '0.5rem',
 				}}
-				onClick={(e) => e.stopPropagation()}
+				onClick={stopPropagation}
 			>
 				<ReactSlider
 					className='pb-3'
-					value={films}
-					onChange={handleSliderChange}
+					value={item}
+					onChange={onChange}
 					min={0}
 					max={18}
 					step={1}
@@ -51,12 +59,12 @@ function FilmsAgeSelector() {
 					trackClassName='track'
 				/>
 				<div className='dates'>
-					<span>{films}+</span>
+					<span>{item}+</span>
 				</div>
 				{showButton && (
 					<button
 						className='btn btn-primary mt-2'
-						onClick={handleButtonClick}
+						onClick={onClick}
 					>
 						Показать
 					</button>
@@ -64,6 +72,6 @@ function FilmsAgeSelector() {
 			</Dropdown.Item>
 		</DropdownButton>
 	);
-}
+};
 
-export default FilmsAgeSelector;
+export default Slider;

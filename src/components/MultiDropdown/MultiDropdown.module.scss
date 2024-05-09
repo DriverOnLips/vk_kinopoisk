@@ -1,0 +1,16 @@
+.multidropdown .dropdown-menu {
+	max-height: 150px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.multidropdown_item {
+	cursor: pointer;
+
+	.multidropdown_item-check {
+		> input,
+		> label {
+			opacity: 1 !important;
+		}
+	}
+}

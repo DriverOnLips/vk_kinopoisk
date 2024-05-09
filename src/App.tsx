@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ico from 'assets/ico/logo.ico';
 import FilmList from 'pages/FilmList/FilmList';
 
