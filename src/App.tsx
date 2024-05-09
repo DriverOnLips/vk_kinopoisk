@@ -9,11 +9,11 @@ const App = () => {
 	return (
 		<HelmetProvider>
 			<Helmet>
-				{/* <link
-						rel='icon'
-						type='image/svg+xml'
-						href={ico}
-					/> */}
+				<link
+					rel='icon'
+					type='image/svg+xml'
+					href={ico}
+				/>
 			</Helmet>
 
 			{/* Used for gh-pages */}
