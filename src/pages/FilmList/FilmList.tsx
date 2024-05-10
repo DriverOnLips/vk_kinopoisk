@@ -1,5 +1,6 @@
+import cn from 'classnames';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import MultiDropdown from 'components/MultiDropdown/MultiDropdown';
 import Paginator from 'components/Pagination/Pagination';
 import { useApp } from 'hooks/useApp';
@@ -9,6 +10,7 @@ import { FilmFromListModel } from 'types/FilmFromList';
 import FilmsAgeSelector from '../../components/Slider/Slider';
 import FilmItem from './components/FilmItem/FilmItem';
 import FilmItemPlaceholder from './components/FilmItemPlaceholder/FilmItemPlaceholder';
+import styles from './FilmList.module.scss';
 
 const FilmsList: React.FC = () => {
 	const { films, setFilms } = useFilm();
@@ -64,15 +66,12 @@ const FilmsList: React.FC = () => {
 	}, [films]);
 
 	return (
-		<div id='films_list'>
-			<span
-				className='my-5'
-				id='best_films-span'
-			>
+		<div id={styles.film_list}>
+			<span className={cn(styles['film_list_span'], 'my-5')}>
 				Лучшие фильмы и сериалы
 			</span>
 
-			<Container className='selectors my-5'>
+			<Container className={styles.film_list__selectors}>
 				<MultiDropdown
 					title='Страна'
 					items={filmCountry}
@@ -83,9 +82,10 @@ const FilmsList: React.FC = () => {
 					onSliderChange={onSliderChange}
 					onButtonClick={onSliderButtonClick}
 				/>
+				<Button>Найти</Button>
 			</Container>
 
-			<Container className='films_gallery-container'>
+			<Container className={styles.film_list__gallery}>
 				<Row>
 					{isLoaded ? (
 						<>
@@ -94,7 +94,7 @@ const FilmsList: React.FC = () => {
 									{films?.map((film: FilmFromListModel) => (
 										<Col
 											key={film.id}
-											className='films_gallery-col p-3'
+											className={cn(styles['film_list__gallery-col'], 'p-3')}
 										>
 											<FilmItem film={film} />
 										</Col>
@@ -102,7 +102,12 @@ const FilmsList: React.FC = () => {
 									<Paginator />
 								</>
 							) : (
-								<span className='films_gallery-container__no_content-span mb-2'>
+								<span
+									className={cn(
+										styles['film_list__gallery__no_content-span'],
+										'mb-2',
+									)}
+								>
 									Нет фильмов или сериалов, удовлетворяющих параметрам поиска
 								</span>
 							)}
@@ -112,7 +117,10 @@ const FilmsList: React.FC = () => {
 							{Array.from({ length: 2 }).map((_, i) => (
 								<Col
 									key={i}
-									className='films_gallery-col-placeholder p-3'
+									className={cn(
+										styles['film_list__gallery-col_placeholder'],
+										'p-3',
+									)}
 								>
 									<FilmItemPlaceholder />
 								</Col>

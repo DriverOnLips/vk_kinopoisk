@@ -1,6 +1,8 @@
+import cn from 'classnames';
 import React from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 import { useApp } from 'hooks/useApp';
+import styles from './Pagination.module.scss';
 
 const Paginator = () => {
 	const { page, pages, setPage } = useApp();
@@ -11,8 +13,8 @@ const Paginator = () => {
 
 	return (
 		<Pagination
-			id='pages'
-			className='pt-5 pb-3'
+			id='pagination'
+			className={cn(styles.pagination, 'pt-5', 'pb-3')}
 			data-bs-theme='dark'
 		>
 			<Pagination.Prev

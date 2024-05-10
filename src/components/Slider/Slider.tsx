@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
-import ReactSlider from 'react-slider';
+import styles from './Slider.module.scss';
 
 type SliderProps = {
 	item: number;
@@ -15,10 +15,15 @@ const Slider: React.FC<SliderProps> = ({
 }) => {
 	const [showButton, setShowButton] = useState<boolean>(false);
 
-	const onChange = useCallback(() => {
-		setShowButton(true);
-		onSliderChange;
-	}, [onSliderChange]);
+	const onChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			e.preventDefault();
+			const value = parseInt(e.target.value, 10);
+			setShowButton(true);
+			onSliderChange(value);
+		},
+		[onSliderChange],
+	);
 
 	const stopPropagation = useCallback(
 		(e: React.MouseEvent<HTMLElement, MouseEvent>) => e.stopPropagation(),
@@ -27,18 +32,18 @@ const Slider: React.FC<SliderProps> = ({
 
 	const onClick = useCallback(() => {
 		setShowButton(false);
-		onButtonClick;
+		onButtonClick();
 	}, [onButtonClick]);
 
 	return (
 		<DropdownButton
-			id='films_age-selector'
+			id='slider_selector'
 			title='Возрастное ограничение'
 			data-bs-theme='dark'
 			variant='secondary'
 		>
 			<Dropdown.Item
-				className='films_age-slider'
+				className={styles.slider}
 				style={{
 					all: 'unset',
 					display: 'flex',
@@ -48,17 +53,14 @@ const Slider: React.FC<SliderProps> = ({
 				}}
 				onClick={stopPropagation}
 			>
-				<ReactSlider
-					className='pb-3'
+				<input
+					type='range'
+					min='0'
+					max='18'
 					value={item}
 					onChange={onChange}
-					min={0}
-					max={18}
-					step={1}
-					thumbClassName='thumb'
-					trackClassName='track'
 				/>
-				<div className='dates'>
+				<div className={styles.dates}>
 					<span>{item}+</span>
 				</div>
 				{showButton && (

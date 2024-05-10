@@ -1,8 +1,10 @@
+import cn from 'classnames';
 import React, { useState, useRef, useEffect } from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useFilm } from 'hooks/useFilm';
 import { FilmFromListModel } from 'types/FilmFromList';
-import { useFilm } from '../../../../hooks/useFilm';
+import styles from './FilmItem.module.scss';
 
 const FilmItem: React.FC<{
 	film: FilmFromListModel;
@@ -45,7 +47,7 @@ const FilmItem: React.FC<{
 
 	return (
 		<Card
-			className='film_item-card'
+			className={styles['film_item-card']}
 			id={String(film.id)}
 			onMouseLeave={handleMouseLeave}
 			onMouseEnter={handleMouseEnter}
@@ -61,7 +63,7 @@ const FilmItem: React.FC<{
 			) : (
 				<>
 					<Card.Img
-						className='film_item-card_img'
+						className={styles['film_item-card__img']}
 						variant='top'
 						src={film.photo}
 						style={{
@@ -71,13 +73,22 @@ const FilmItem: React.FC<{
 					/>
 				</>
 			)}
-			<Card.Body className='film_item-card_body'>
-				<Card.Title className='film_title mb-3'>{film.name}</Card.Title>
-				<div className='film_details'>
-					<Card.Text className='film_details-text'>
+			<Card.Body className={styles['film_item-card__body']}>
+				<Card.Title
+					className={cn(styles['film_item-card__body__title'], 'mb-3')}
+				>
+					{film.name}
+				</Card.Title>
+				<div className={styles['film_item-card__body__details']}>
+					<Card.Text className={styles['film_item-card__body__details-text']}>
 						Рейтинг: {Math.round(film.rating * 100) / 100}
 					</Card.Text>
-					<Card.Text className='film_details-text film_details-text-right'>
+					<Card.Text
+						className={cn(
+							styles['film_item-card__body__details-text'],
+							styles['film_item-card__body__details-text-right'],
+						)}
+					>
 						{film.genre}, {film.year}
 					</Card.Text>
 				</div>

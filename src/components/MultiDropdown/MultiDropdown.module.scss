@@ -7,7 +7,7 @@
 .multidropdown_item {
 	cursor: pointer;
 
-	.multidropdown_item-check {
+	&-check {
 		> input,
 		> label {
 			opacity: 1 !important;
