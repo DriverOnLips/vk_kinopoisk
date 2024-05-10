@@ -22,17 +22,17 @@ const FilmsList: React.FC = () => {
 		(e: React.MouseEvent<HTMLDivElement>, country: CountryType) => {
 			e.preventDefault();
 
-			const updatedCountries = [...filmCountry];
-
-			const lastCountryIndex = updatedCountries.findIndex(
-				(c: CountryType) => c.state === true,
-			);
-			const newCountryIndex = updatedCountries.findIndex(
-				(c: CountryType) => c.name === country.name,
-			);
-
-			updatedCountries[lastCountryIndex].state = false;
-			updatedCountries[newCountryIndex].state = true;
+			const updatedCountries = filmCountry.map((ctr: CountryType) => {
+				return {
+					...ctr,
+					state:
+						ctr.state === true
+							? false
+							: ctr.name === country.name
+								? true
+								: ctr.state,
+				};
+			});
 
 			setFilmCountry(updatedCountries);
 		},

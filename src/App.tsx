@@ -19,7 +19,7 @@ const App = () => {
 			</Helmet>
 
 			{/* Used for gh-pages */}
-			{/* <BrowserRouter basename='/kts-gastronaut'> */}
+			{/* <BrowserRouter basename='/vk_kinopoisk'> */}
 			<BrowserRouter basename='/'>
 				<Header />
 				<Routes>
