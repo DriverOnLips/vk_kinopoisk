@@ -1,5 +1,15 @@
-import { CountryType } from './CountryType';
 import { FilmReviewModel } from './FilmReview';
+
+type FilmRating = {
+	kp: number;
+	imdb: number;
+};
+
+type SimilarMoviesType = {
+	id: number;
+	name: string;
+	poster: FilmPoster;
+};
 
 export type SimilarFilmsType = {
 	id: number;
@@ -7,28 +17,17 @@ export type SimilarFilmsType = {
 	photo: string;
 };
 
-type FilmRating = {
-	kp: number;
-	imdb: number;
-};
-
-type FilmPoster = {
+export type FilmPoster = {
 	url: string;
 	previewUrl: string;
 };
 
-type FilmCountry = {
+export type FilmCountry = {
 	name: string;
 };
 
-type FilmGenre = {
+export type FilmGenre = {
 	name: string;
-};
-
-type SimilarMoviesType = {
-	id: number;
-	name: string;
-	poster: FilmPoster;
 };
 
 export type FilmApi = {

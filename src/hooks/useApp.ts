@@ -5,13 +5,13 @@ import {
 	SetPage,
 	SetPages,
 	SetIsSearchOpen,
+	AppState,
 } from 'stores/AppStore/AppStore';
 import { CountryType } from 'types/CountryType';
 
 export function useApp() {
-	const { filmAge, filmCountry, page, pages, isSearchOpen } = useSelector(
-		(store: any) => store.app,
-	);
+	const { filmAge, filmCountry, page, pages, isSearchOpen }: AppState =
+		useSelector((store: any) => store.app);
 
 	const dispatch = useDispatch();
 

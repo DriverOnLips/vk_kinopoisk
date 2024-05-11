@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CountryType } from 'types/CountryType';
 import { filmCountrySet } from './config';
 
-type AppState = {
+export type AppState = {
 	filmAge: number;
 	filmCountry: CountryType[];
 	page: number;
-	pages: number | null;
+	pages: number;
 	isSearchOpen: boolean;
 };
 

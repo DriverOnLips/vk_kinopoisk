@@ -15,7 +15,11 @@ import {
 	FilmFromListModel,
 	normalizeFilmFromList,
 } from 'types/FilmFromList';
-import { FilmFromSearchModel } from 'types/FilmFromSearch';
+import {
+	FilmFromSearchApi,
+	FilmFromSearchModel,
+	normalizeFilmFromSearch,
+} from 'types/FilmFromSearch';
 import { FilmReviewApi, normalizeFilmReview } from 'types/FilmReview';
 import { Api } from 'utils/api';
 import { useApp } from './useApp';
@@ -71,33 +75,21 @@ export function useFilm() {
 	const setFilmsFromSearch = async (name: string) => {
 		const response = await api.searchFilm(name);
 		const filmsFromResponse: FilmFromSearchModel[] = response?.docs
-			?.filter((item: any) => {
-				return (
-					item.id !== null &&
-					item.name.trim() !== null &&
-					item.year !== null &&
-					item.genres.length > 0 &&
-					item.genres[0] &&
-					item.genres[0].name !== null &&
-					item.poster &&
-					item.poster.previewUrl !== null &&
-					item.countries.length > 0 &&
-					item.countries[0] &&
-					item.countries[0].name !== null
-				);
-			})
-			.map((item: any) => {
-				return {
-					id: item.id,
-					name: item.name,
-					year: item.year,
-					genre:
-						item.genres[0].name.charAt(0).toLocaleUpperCase() +
-						item.genres[0].name.slice(1),
-					photo: item.poster.previewUrl,
-					country: item.countries[0].name,
-				};
-			});
+			?.filter(
+				({ id, name, year, genres, poster, countries }: FilmFromSearchApi) =>
+					id &&
+					name.trim() &&
+					year &&
+					genres.length > 0 &&
+					genres[0] &&
+					genres[0].name &&
+					poster &&
+					poster.previewUrl &&
+					countries.length > 0 &&
+					countries[0] &&
+					countries[0].name,
+			)
+			.map(normalizeFilmFromSearch);
 
 		dispatch(SetFilmsFromSearch(filmsFromResponse));
 	};

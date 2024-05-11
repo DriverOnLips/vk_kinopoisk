@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { FilmApi } from 'types/Film';
 import { FilmFromListResponse } from 'types/FilmFromList';
+import { FilmFromSearchResponse } from 'types/FilmFromSearch';
 import { FilmReviewResponse } from 'types/FilmReview';
 
 export class Api {
@@ -162,7 +163,7 @@ export class Api {
 			});
 	};
 
-	searchFilm = async (name: string): Promise<any> => {
+	searchFilm = async (name: string): Promise<FilmFromSearchResponse> => {
 		const configItem = this.config.find((item) => item.name === 'searchFilm');
 
 		if (!configItem) {

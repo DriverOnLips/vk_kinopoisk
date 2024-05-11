@@ -36,7 +36,7 @@ const FilmPage: React.FC = () => {
 	}, [film]);
 
 	return (
-		<div id={styles.film_page}>
+		<div className={styles.film_page}>
 			<svg
 				className={styles.film_page__arrow_back}
 				width='36'
