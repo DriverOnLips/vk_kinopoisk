@@ -1,7 +1,7 @@
-.reviews {
+.gallery {
 	max-width: 90vw !important;
 
-	.reviews_carousel {
+	.gallery__items {
 		display: flex;
 		gap: 1rem;
 		padding: 0 50px;
@@ -22,8 +22,8 @@
 }
 
 @media screen and (max-width: 650px) {
-	.reviews {
-		.reviews_carousel {
+	.gallery {
+		.gallery__items {
 			padding: 0;
 		}
 	}

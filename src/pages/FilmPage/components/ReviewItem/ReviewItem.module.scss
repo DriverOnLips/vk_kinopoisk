@@ -1,0 +1,39 @@
+@import "styles/vars.scss";
+
+.review_item {
+	&__title {
+		font-size: $size5;
+	}
+
+	&__type,
+	&__text,
+	&__username,
+	&__date {
+		font-size: $size6;
+	}
+
+	&__text {
+		max-height: 40vh;
+		overflow: auto;
+	}
+
+	p {
+		margin: 0;
+		padding: 0;
+	}
+}
+
+// @media screen and (max-width: 800px) {
+// 	.review_item {
+// 		.review_title {
+// 			font-size: $size6;
+// 		}
+
+// 		.review_type,
+// 		.review_text,
+// 		.review_username,
+// 		.review_date {
+// 			font-size: $size7;
+// 		}
+// 	}
+// }

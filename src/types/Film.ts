@@ -25,6 +25,12 @@ type FilmGenre = {
 	name: string;
 };
 
+type SimilarMoviesType = {
+	id: number;
+	name: string;
+	poster: FilmPoster;
+};
+
 export type FilmApi = {
 	id: number;
 	name: string;
@@ -35,7 +41,7 @@ export type FilmApi = {
 	genres: FilmGenre[];
 	rating: FilmRating;
 	poster: FilmPoster;
-	similarFilms: SimilarFilmsType[];
+	similarMovies: SimilarMoviesType[];
 };
 
 export type FilmModel = {
@@ -64,5 +70,9 @@ export const normalizeFilm = (from: FilmApi): FilmModel => ({
 		)
 		.join(', '),
 	rating: from.rating.kp,
+	similarFilms: from.similarMovies?.map((movie) => ({
+		...movie,
+		photo: movie.poster.previewUrl,
+	})),
 	reviews: [],
 });

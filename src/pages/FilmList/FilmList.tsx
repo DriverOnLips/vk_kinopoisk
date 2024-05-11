@@ -14,7 +14,15 @@ import styles from './FilmList.module.scss';
 
 const FilmsList: React.FC = () => {
 	const { films, setFilms } = useFilm();
-	const { page, filmAge, filmCountry, setFilmCountry, setFilmAge } = useApp();
+	const {
+		page,
+		pages,
+		filmAge,
+		filmCountry,
+		setPage,
+		setFilmCountry,
+		setFilmAge,
+	} = useApp();
 
 	const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
@@ -51,6 +59,11 @@ const FilmsList: React.FC = () => {
 	const onSliderButtonClick = useCallback(() => {
 		setFilms(page, filmAge, filmCountry);
 	}, [page, filmAge, filmCountry]);
+
+	const onPaginationClick = useCallback(
+		(page: number) => () => setPage(page),
+		[setPage],
+	);
 
 	const loadFilms = async () => {
 		await setFilms(page, filmAge, filmCountry);
@@ -99,7 +112,11 @@ const FilmsList: React.FC = () => {
 											<FilmItem film={film} />
 										</Col>
 									))}
-									<Paginator />
+									<Paginator
+										page={page}
+										pages={pages}
+										onClick={onPaginationClick}
+									/>
 								</>
 							) : (
 								<span

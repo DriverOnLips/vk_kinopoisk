@@ -2,9 +2,10 @@ import cn from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
+import Gallery from 'components/Gallery/Gallery';
 import { useFilm } from '../../hooks/useFilm';
 import FilmPagePlaceholder from './components/Placeholder/FilmPagePlaceholder';
-import Reviews from './components/Reviews/Reviews';
+import ReviewItem from './components/ReviewItem/ReviewItem';
 import SimilarFilms from './components/SimilarFilms/SimilarFilms';
 
 import styles from './FilmPage.module.scss';
@@ -157,7 +158,12 @@ const FilmPage: React.FC = () => {
 							Отзывы:
 						</span>
 						{film!.reviews?.length > 0 ? (
-							<Reviews reviews={film!.reviews} />
+							film?.reviews && (
+								<Gallery
+									items={film.reviews}
+									ItemElement={ReviewItem}
+								/>
+							)
 						) : (
 							<span
 								className={cn(
