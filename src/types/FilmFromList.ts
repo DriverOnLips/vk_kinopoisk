@@ -1,11 +1,8 @@
+import { FilmPoster } from './Film';
+
 type FilmFromListRating = {
 	kp: number;
 	imdb: number;
-};
-
-type FilmFromListPoster = {
-	url: string;
-	previewUrl: string;
 };
 
 type FilmFromListGenre = {
@@ -17,7 +14,7 @@ export type FilmFromListApi = {
 	name: string;
 	year: number;
 	rating: FilmFromListRating;
-	poster: FilmFromListPoster;
+	poster: FilmPoster;
 	genres: FilmFromListGenre[];
 };
 

@@ -1,11 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { appReducer } from './AppStore/AppStore';
-import { filmReducer } from './FilmStore';
+import { filmListReducer } from './FilmListStore';
+import { filmPageReducer } from './FilmPageStore';
+import { filmSearchReducer } from './FilmSearchStore';
 
 const store = configureStore({
 	reducer: {
 		app: appReducer,
-		film: filmReducer,
+		filmList: filmListReducer,
+		filmPage: filmPageReducer,
+		filmSearch: filmSearchReducer,
 	},
 });
 

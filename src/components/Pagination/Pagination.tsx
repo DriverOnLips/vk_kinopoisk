@@ -1,16 +1,15 @@
 import cn from 'classnames';
 import React from 'react';
 import Pagination from 'react-bootstrap/Pagination';
-import { useApp } from 'hooks/useApp';
 import styles from './Pagination.module.scss';
 
-const Paginator = () => {
-	const { page, pages, setPage } = useApp();
+type PaginationProps = {
+	page: number;
+	pages: number;
+	onClick: (page: number) => () => void;
+};
 
-	const handlerClick = (num: number) => {
-		setPage(num);
-	};
-
+const Paginator: React.FC<PaginationProps> = ({ page, pages, onClick }) => {
 	return (
 		<Pagination
 			id='pagination'
@@ -19,18 +18,18 @@ const Paginator = () => {
 		>
 			<Pagination.Prev
 				disabled={page === 1}
-				onClick={() => handlerClick(page - 1)}
+				onClick={onClick(page - 1)}
 			/>
 
 			{page > 2 ? (
-				<Pagination.Item onClick={() => handlerClick(page - 2)}>
+				<Pagination.Item onClick={onClick(page - 2)}>
 					{page - 2}
 				</Pagination.Item>
 			) : (
 				<></>
 			)}
 			{page > 1 ? (
-				<Pagination.Item onClick={() => handlerClick(page - 1)}>
+				<Pagination.Item onClick={onClick(page - 1)}>
 					{page - 1}
 				</Pagination.Item>
 			) : (
@@ -40,14 +39,14 @@ const Paginator = () => {
 			<Pagination.Item active>{page}</Pagination.Item>
 
 			{pages - page > 0 ? (
-				<Pagination.Item onClick={() => handlerClick(page + 1)}>
+				<Pagination.Item onClick={onClick(page + 1)}>
 					{page + 1}
 				</Pagination.Item>
 			) : (
 				<></>
 			)}
 			{pages - page > 1 ? (
-				<Pagination.Item onClick={() => handlerClick(page + 2)}>
+				<Pagination.Item onClick={onClick(page + 2)}>
 					{page + 2}
 				</Pagination.Item>
 			) : (
@@ -56,7 +55,7 @@ const Paginator = () => {
 
 			<Pagination.Next
 				disabled={page === pages}
-				onClick={() => handlerClick(page + 1)}
+				onClick={onClick(page + 1)}
 			/>
 		</Pagination>
 	);

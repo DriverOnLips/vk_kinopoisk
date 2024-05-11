@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ico from 'assets/ico/logo.ico';
 import Header from 'components/Header/Header';
 import FilmList from 'pages/FilmList/FilmList';
+import FilmPage from 'pages/FilmPage/FilmPage';
 import 'styles/index.scss';
 
 const App = () => {
@@ -27,14 +28,10 @@ const App = () => {
 						path='/'
 						element={<FilmList />}
 					/>
-					{/* <Route
-							path='/film/:id'
-							element={<FilmPage />}
-						/>
-						<Route
-							path='/not_found'
-							element={<NotFound />}
-						/> */}
+					<Route
+						path='/film/:id'
+						element={<FilmPage />}
+					/>
 					{/* <Route
 							path='*'
 							element={<NotFound />}

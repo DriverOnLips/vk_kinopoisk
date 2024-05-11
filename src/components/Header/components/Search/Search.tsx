@@ -4,7 +4,7 @@ import { Dropdown, Form, Placeholder } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from 'hooks/useApp';
 import useDebounce from 'hooks/useDebounce';
-import { useFilm } from 'hooks/useFilm';
+import { useFilmSearch } from 'hooks/useFilmSearch';
 import { FilmFromSearchModel } from 'types/FilmFromSearch';
 import SearchItem from '../SearchItem/SearchItem';
 import styles from './Search.module.scss';
@@ -15,16 +15,15 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 	const { isSearchOpen, setIsSearchOpen } = useApp();
 	const {
 		filmsFromSearch,
+		filmsSearchHistory,
 		setFilmsFromSearch,
 		deleteFilmsFromSearch,
-		filmsSearchHistory,
 		addFilmToHistory,
-	} = useFilm();
+	} = useFilmSearch();
 	const [searchText, setSearchText] = useState<string>('');
 	const debouncedSearchText = useDebounce(searchText, 1000);
 	const navigate = useNavigate();
 	const dropdownRef = useRef<HTMLFormElement>(null);
-	const { deleteFilm } = useFilm();
 	const [filmsToSuggest, setFilmsToSuggest] = useState<FilmFromSearchModel[]>(
 		[],
 	);
@@ -64,11 +63,10 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 			buttonRef.current?.getElementsByTagName('button')[0].click();
 			if (location.pathname !== `/film/${film.id}`) {
 				addFilmToHistory(film);
-				deleteFilm();
 				navigate(`/film/${film.id}`);
 			}
 		},
-		[buttonRef, addFilmToHistory, deleteFilm, navigate, setIsSearchOpen],
+		[buttonRef, addFilmToHistory, navigate, setIsSearchOpen],
 	);
 
 	const onInputFocus = useCallback(

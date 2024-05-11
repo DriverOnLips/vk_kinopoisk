@@ -1,5 +1,8 @@
 import axios from 'axios';
+import { FilmApi } from 'types/Film';
 import { FilmFromListResponse } from 'types/FilmFromList';
+import { FilmFromSearchResponse } from 'types/FilmFromSearch';
+import { FilmReviewResponse } from 'types/FilmReview';
 
 export class Api {
 	private static instance: Api;
@@ -16,9 +19,9 @@ export class Api {
 
 		this.domain = 'https://api.kinopoisk.dev/v1.4/';
 
-		this.token = '65M503X-DGEMWBE-JSNXV9Y-384KZJR';
+		// this.token = '65M503X-DGEMWBE-JSNXV9Y-384KZJR';
 		// this.token = 'BMQ0PHY-0SCM5Q8-JPZJ1P3-PV28JKJ';
-		// this.token = 'FBZJA82-T40M4XZ-G2W29WD-V4DE583';
+		this.token = 'FBZJA82-T40M4XZ-G2W29WD-V4DE583';
 		// this.token = '5M9EE5M-6AB4RSG-KKM19X2-HSJAX8Q';
 		// this.token = 'T2XXF72-5AXMJ6Y-N8AX3BT-ACBEVAH';
 		// this.token = 'ZX8ZGSZ-PYTM11R-NYKBY15-J29FXHB';
@@ -61,6 +64,7 @@ export class Api {
 			'id',
 			'name',
 			'year',
+			'description',
 			'rating.kp',
 			'genres.name',
 			'poster.url',
@@ -94,7 +98,7 @@ export class Api {
 			});
 	};
 
-	getFilmInfo = async (id: number): Promise<any> => {
+	getFilmInfo = async (id: number): Promise<FilmApi> => {
 		const configItem = this.config.find((item) => item.name === 'getFilmInfo');
 
 		if (!configItem) {
@@ -116,7 +120,7 @@ export class Api {
 			});
 	};
 
-	getFilmReviews = async (id: number): Promise<any> => {
+	getFilmReviews = async (id: number): Promise<FilmReviewResponse> => {
 		const configItem = this.config.find(
 			(item) => item.name === 'getFilmReviews',
 		);
@@ -160,7 +164,7 @@ export class Api {
 			});
 	};
 
-	searchFilm = async (name: string): Promise<any> => {
+	searchFilm = async (name: string): Promise<FilmFromSearchResponse> => {
 		const configItem = this.config.find((item) => item.name === 'searchFilm');
 
 		if (!configItem) {

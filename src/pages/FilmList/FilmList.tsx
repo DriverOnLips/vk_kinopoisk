@@ -1,22 +1,29 @@
 import cn from 'classnames';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import MultiDropdown from 'components/MultiDropdown/MultiDropdown';
 import Paginator from 'components/Pagination/Pagination';
 import Slider from 'components/Slider/Slider';
 import { useApp } from 'hooks/useApp';
-import { useFilm } from 'hooks/useFilm';
+import { useFilmList } from 'hooks/useFilmList';
 import { CountryType } from 'types/CountryType';
 import { FilmFromListModel } from 'types/FilmFromList';
+import { Meta } from 'utils/meta';
 import FilmItem from './components/FilmItem/FilmItem';
-import FilmItemPlaceholder from './components/FilmItemPlaceholder/FilmItemPlaceholder';
+import FilmItemPlaceholder from './components/Paceholder/FilmItemPlaceholder';
 import styles from './FilmList.module.scss';
 
 const FilmsList: React.FC = () => {
-	const { films, setFilms } = useFilm();
-	const { page, filmAge, filmCountry, setFilmCountry, setFilmAge } = useApp();
-
-	const [isLoaded, setIsLoaded] = useState<boolean>(false);
+	const { meta, films, setFilms, deleteFilms } = useFilmList();
+	const {
+		page,
+		pages,
+		filmAge,
+		filmCountry,
+		setPage,
+		setFilmCountry,
+		setFilmAge,
+	} = useApp();
 
 	const onMultidropdownSelect = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>, country: CountryType) => {
@@ -48,22 +55,21 @@ const FilmsList: React.FC = () => {
 		[filmAge, setFilmAge],
 	);
 
-	const onSliderButtonClick = useCallback(() => {
-		setFilms(page, filmAge, filmCountry);
-	}, [page, filmAge, filmCountry]);
+	const onPaginationClick = useCallback(
+		(page: number) => () => setPage(page),
+		[setPage],
+	);
 
 	const loadFilms = async () => {
 		await setFilms(page, filmAge, filmCountry);
 	};
 
 	useEffect(() => {
-		setIsLoaded(false);
 		loadFilms();
+		return () => {
+			deleteFilms();
+		};
 	}, [page, filmAge, filmCountry]);
-
-	useEffect(() => {
-		setIsLoaded(true);
-	}, [films]);
 
 	return (
 		<div id={styles.film_list}>
@@ -80,18 +86,17 @@ const FilmsList: React.FC = () => {
 				<Slider
 					item={filmAge}
 					onSliderChange={onSliderChange}
-					onButtonClick={onSliderButtonClick}
 				/>
 				<Button>Найти</Button>
 			</Container>
 
 			<Container className={styles.film_list__gallery}>
 				<Row>
-					{isLoaded ? (
+					{meta === Meta.success ? (
 						<>
 							{films?.length > 0 ? (
 								<>
-									{films?.map((film: FilmFromListModel) => (
+									{films.map((film: FilmFromListModel) => (
 										<Col
 											key={film.id}
 											className={cn(styles['film_list__gallery-col'], 'p-3')}
@@ -99,7 +104,11 @@ const FilmsList: React.FC = () => {
 											<FilmItem film={film} />
 										</Col>
 									))}
-									<Paginator />
+									<Paginator
+										page={page}
+										pages={pages}
+										onClick={onPaginationClick}
+									/>
 								</>
 							) : (
 								<span
@@ -114,7 +123,7 @@ const FilmsList: React.FC = () => {
 						</>
 					) : (
 						<>
-							{Array.from({ length: 2 }).map((_, i) => (
+							{Array.from({ length: 4 }).map((_, i) => (
 								<Col
 									key={i}
 									className={cn(

@@ -1,0 +1,38 @@
+.film_info-placeholder {
+	margin: 0 !important;
+	padding: 0 !important;
+	max-width: 100% !important;
+
+	.film_info-placeholder__photo {
+		padding-left: 0;
+	}
+
+	.film_info-placeholder__photo-img {
+		display: flex;
+		width: 100%;
+		aspect-ratio: 5 / 5;
+		background: gray;
+	}
+
+	.film_info-placeholder-div {
+		padding-right: 2rem;
+
+		.film_info-placeholder-name {
+			margin: 2rem 0;
+			text-align: center;
+		}
+
+		.film_info-placeholder-country_genres {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+}
+
+@media screen and (max-width: 650px) {
+	.film_info-placeholder {
+		.film_info-placeholder__photo {
+			display: none;
+		}
+	}
+}

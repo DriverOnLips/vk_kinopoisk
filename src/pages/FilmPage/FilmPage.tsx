@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import './FilmPage.scss';
+import cn from 'classnames';
+import React, { useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useFilm } from '../../hooks/useFilm';
-import Actors from './components/Actors/Actors';
-import FilmPagePlaceholder from './components/FilmPagePlaceholder/FilmPagePlaceholder';
-import PostersCarousel from './components/Posters/Posters';
-import Reviews from './components/Reviews/Reviews';
-import Series from './components/Seasons/Seasons';
-import SimilarMovies from './components/SimilarMovies/SimilarMovies';
+import Gallery from 'components/Gallery/Gallery';
+import { useFilmPage } from 'hooks/useFilmPage';
+import { Meta } from 'utils/meta';
+import FilmPagePlaceholder from './components/Placeholder/FilmPagePlaceholder';
+import ReviewItem from './components/ReviewItem/ReviewItem';
+import SimilarFilms from './components/SimilarFilms/SimilarFilms';
+
+import styles from './FilmPage.module.scss';
 
 const FilmPage: React.FC = () => {
 	const { id } = useParams();
-	const { film, setFilm } = useFilm();
+	const { meta, film, setFilm, deleteFilm } = useFilmPage();
 	const navigate = useNavigate();
-	const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
 	const loadFilm = async () => {
 		if (id) {
@@ -23,20 +23,17 @@ const FilmPage: React.FC = () => {
 	};
 
 	useEffect(() => {
-		setIsLoaded(false);
 		loadFilm();
+
+		return () => {
+			deleteFilm();
+		};
 	}, [id]);
 
-	useEffect(() => {
-		if (film?.id) {
-			setIsLoaded(true);
-		}
-	}, [film]);
-
 	return (
-		<div id='film_page'>
+		<div className={styles.film_page}>
 			<svg
-				className='arrow-back'
+				className={styles.film_page__arrow_back}
 				width='36'
 				height='34'
 				viewBox='0 0 360 336'
@@ -52,129 +49,145 @@ const FilmPage: React.FC = () => {
 					strokeLinejoin='round'
 				/>
 			</svg>
-			{isLoaded ? (
-				<Container className='film_info'>
+			{meta === Meta.success ? (
+				<Container className={styles.film_page__film_info}>
 					<Row>
 						<Col
 							sm={5}
-							className='film_info__photo'
+							className={styles.film_page__film_info__photo}
 						>
 							<img
 								src={film?.photo}
-								className='film_info__photo-img'
+								className={styles['film_page__film_info__photo-img']}
 							/>
 						</Col>
 						<Col
 							sm={7}
-							className='film_info-div'
+							className={styles['film_page__film_info-div']}
 						>
-							<div className='film_info__about'>
-								<span className='film_info__about__name'>{film?.name}</span>
+							<div className={styles['film_page__film_info-div__about']}>
+								<span
+									className={styles['film_page__film_info-div__about__name']}
+								>
+									{film?.name}
+								</span>
 
-								<Row className='film_info__about__country_genres mb-4'>
+								<Row
+									className={cn(
+										styles['film_page__film_info-div__about__country_genres'],
+										'mb-4',
+									)}
+								>
 									<Col
 										sm={6}
-										className='film_info__about__country-div'
+										className={
+											styles['film_page__film_info-div__about__country-div']
+										}
 										style={{ padding: '0' }}
 									>
-										<span className='film_info__about__country'>
+										<span
+											className={
+												styles['film_page__film_info-div__about__country']
+											}
+										>
 											{film?.country}, {film?.year}
 										</span>
 									</Col>
 									<Col
 										sm={6}
-										className='film_info__about__genres-div'
+										className={
+											styles['film_page__film_info-div__about__genres-div']
+										}
 										style={{ padding: '0' }}
 									>
-										<span className='film_info__about__genres'>
-											{film?.genres.charAt(0).toLocaleUpperCase() +
-												film?.genres.slice(1)}
+										<span
+											className={
+												styles['film_page__film_info-div__about__genres']
+											}
+										>
+											{film?.genre}
 										</span>
 									</Col>
 								</Row>
 
 								<Row className='mb-4'>
 									<Col>
-										<span className='film_info__about__description-span'>
+										<span
+											className={
+												styles['film_page__film_info-div__about__description']
+											}
+										>
 											{film?.description}
 										</span>
 									</Col>
 								</Row>
-								<Row className='film_info__about__rating_series mb-4'>
+								<Row
+									className={cn(
+										styles['film_page__film_info-div__about__rating_series'],
+										'mb-4',
+									)}
+								>
 									<Col
 										sm={6}
 										style={{ padding: '0' }}
 									>
-										<span className='film_info__about__rating'>
-											Рейтинг: {Math.round(film?.rating * 100) / 100}
+										<span
+											className={
+												styles['film_page__film_info-div__about__rating']
+											}
+										>
+											Рейтинг: {Math.round(film!.rating * 100) / 100}
 										</span>
 									</Col>
 								</Row>
 							</div>
-							<Row className='posters-main my-5'>
-								<Col className='film_info__posters'>
-									<span className='film_info__posters-span'>Постеры:</span>
-									{film?.posters?.length > 0 ? (
-										<PostersCarousel posters={film.posters} />
-									) : (
-										<span className='film_info__no_posters-span mb-2'>
-											Отсутствуют
-										</span>
-									)}
-								</Col>
-							</Row>
 						</Col>
-						<Row className='posters-mobile'>
-							<Col className='posters-mobile-div'>
-								<span className='posters-mobile-span'>Постеры:</span>
-								{film?.posters?.length > 0 ? (
-									<PostersCarousel posters={film.posters} />
-								) : (
-									<span className='film_info__no_posters-mobile-span mb-2'>
-										Отсутствуют
-									</span>
+					</Row>
+					<Row className={styles.film_page__film_info__reviews}>
+						<span
+							className={cn(
+								styles['film_page__film_info__reviews-span'],
+								'mb-2',
+							)}
+						>
+							Отзывы:
+						</span>
+						{film!.reviews?.length > 0 ? (
+							film?.reviews && (
+								<Gallery
+									items={film.reviews}
+									ItemElement={ReviewItem}
+								/>
+							)
+						) : (
+							<span
+								className={cn(
+									styles['film_page__film_info__reviews__no_reviews-span'],
+									'mb-2',
 								)}
-							</Col>
-						</Row>
-					</Row>
-					<Row className='my-3 film__actors'>
-						<span className='film__actors-span mb-2'>Актеры:</span>
-						{film?.actors?.length > 0 ? (
-							<Actors actors={film?.actors} />
-						) : (
-							<span className='film__actors__no_actors-span mb-2'>
-								Актерский состав не известен
-							</span>
-						)}
-					</Row>
-					<Row className='film__reviews'>
-						<span className='film__reviews-span mb-2'>Отзывы:</span>
-						{film?.reviews?.length > 0 ? (
-							<Reviews reviews={film?.reviews} />
-						) : (
-							<span className='film__reviews__no_reviews-span mb-2'>
+							>
 								Отзывов пока нет
 							</span>
 						)}
 					</Row>
-					<Row className='film__series my-3'>
-						<span className='film__series-span mb-2'>Сезоны:</span>
-						{film?.isSeries ? (
-							<Series seasons={film.seasons} />
-						) : (
-							<span className='film__series__no_series-span mb-2'>
-								Фильм не имеет сезонов
-							</span>
-						)}
-					</Row>
-					<Row className='film__similar my-3'>
-						<span className='film__similar-span mb-2'>
+					<Row className={cn(styles.film_page__film_info__similar, 'my-3')}>
+						<span
+							className={cn(
+								styles['film_page__film_info__similar-span'],
+								'mb-2',
+							)}
+						>
 							Вам может понравиться:
 						</span>
-						{film?.similarMovies?.length > 0 ? (
-							<SimilarMovies movies={film?.similarMovies} />
+						{film!.similarFilms?.length > 0 ? (
+							<SimilarFilms movies={film!.similarFilms} />
 						) : (
-							<span className='film__similar__no_similar-span mb-2'>
+							<span
+								className={cn(
+									styles['film_page__film_info__similar__no_similar-span'],
+									'mb-2',
+								)}
+							>
 								Похожих фильмов не нашлось
 							</span>
 						)}

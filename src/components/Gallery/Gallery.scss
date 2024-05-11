@@ -1,0 +1,30 @@
+.gallery {
+	max-width: 90vw !important;
+
+	.gallery__items {
+		display: flex;
+		gap: 1rem;
+		padding: 0 50px;
+	}
+
+	.carousel {
+		.carousel-control-next {
+			width: auto;
+		}
+		.carousel-control-prev {
+			width: auto;
+		}
+
+		.carousel-indicators {
+			display: none;
+		}
+	}
+}
+
+@media screen and (max-width: 650px) {
+	.gallery {
+		.gallery__items {
+			padding: 0;
+		}
+	}
+}

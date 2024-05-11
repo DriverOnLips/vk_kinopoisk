@@ -1,0 +1,60 @@
+@import "styles/vars.scss";
+
+.similar_films {
+	&__gallery {
+		&__item {
+			cursor: pointer;
+
+			&-img {
+				width: 100%;
+				aspect-ratio: 2 / 3;
+				object-fit: cover;
+			}
+
+			&-span {
+				font-size: $size5;
+				color: $text-color;
+				padding: 0 2rem;
+				text-align: center;
+			}
+		}
+	}
+}
+
+// @media screen and (max-width: 1000px) {
+// 	.similar_movies {
+// 		.similar_movies__gallery {
+// 			.similar_movies__item {
+// 				.similar_movies__item-span {
+// 					font-size: $size6;
+// 					padding: 0 1rem;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
+// @media screen and (max-width: 800px) {
+// 	.similar_movies {
+// 		.similar_movies__gallery {
+// 			.similar_movies__item {
+// 				.similar_movies__item-span {
+// 					font-size: $size7;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
+// @media screen and (max-width: 650px) {
+// 	.similar_movies {
+// 		width: 60vw !important;
+// 		padding: 0;
+
+// 		.similar_movies__gallery {
+// 			.similar_movies__item {
+// 				width: 50%;
+// 			}
+// 		}
+// 	}
+// }
