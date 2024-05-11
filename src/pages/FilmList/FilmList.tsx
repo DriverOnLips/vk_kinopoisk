@@ -11,6 +11,7 @@ import { CountryType } from 'types/CountryType';
 import { FilmFromListModel } from 'types/FilmFromList';
 import { Meta } from 'utils/meta';
 import FilmItem from './components/FilmItem/FilmItem';
+import List from './components/List/List';
 import FilmItemPlaceholder from './components/Paceholder/FilmItemPlaceholder';
 import styles from './FilmList.module.scss';
 
@@ -66,7 +67,7 @@ const FilmsList: React.FC = () => {
 	}, [page, filmAge, filmCountry]);
 
 	return (
-		<div id={styles.film_list}>
+		<div className={styles.film_list}>
 			<span className={cn(styles['film_list_span'], 'my-5')}>
 				Лучшие фильмы и сериалы
 			</span>
@@ -90,14 +91,18 @@ const FilmsList: React.FC = () => {
 						<>
 							{films?.length > 0 ? (
 								<>
-									{films.map((film: FilmFromListModel) => (
+									<List
+										filmList={films}
+										increase={false}
+									/>
+									{/* {films.map((film: FilmFromListModel) => (
 										<Col
 											key={film.id}
 											className={cn(styles['film_list__gallery-col'], 'p-3')}
 										>
 											<FilmItem film={film} />
 										</Col>
-									))}
+									))} */}
 									<Paginator
 										page={page}
 										pages={pages}

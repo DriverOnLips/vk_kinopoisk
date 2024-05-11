@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { useCallback, CSSProperties, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { VariableSizeGrid as Grid } from 'react-window';
-
-interface ScrollEvent {
-	scrollTop: number;
-}
+import { FilmFromListModel } from 'types/FilmFromList';
+import FilmItem from '../FilmItem/FilmItem';
 
 interface GridItemProps {
 	columnIndex: number;
@@ -14,32 +11,11 @@ interface GridItemProps {
 }
 
 type ListProps = {
-	recipeList: RecipeFromListModel[];
-	setIsAtEnd(value: boolean): void;
+	filmList: FilmFromListModel[];
 	increase: boolean;
 };
 
-const List: React.FC<ListProps> = ({ recipeList, setIsAtEnd, increase }) => {
-	const navigate = useNavigate();
-
-	const handleScroll = useCallback(
-		({ scrollTop }: ScrollEvent) => {
-			const totalHeight =
-				(recipeList.length * setItemHeight()) / getColumnCount();
-			const isAtEnd = scrollTop + 1200 >= totalHeight; // 1200 - это высота контейнера
-			setIsAtEnd(isAtEnd);
-		},
-		[recipeList.length, setIsAtEnd],
-	);
-
-	const onCardButtonClickHandler = useCallback(() => {}, []);
-	const onCardItemClickHandler = useCallback(
-		(id: number) => () => {
-			navigate(`/recipe/${id}`);
-		},
-		[navigate],
-	);
-
+const List: React.FC<ListProps> = ({ filmList, increase }) => {
 	const getColumnCount = () => {
 		const screenWidth = window.innerWidth;
 		if (screenWidth < 650) {
@@ -90,40 +66,29 @@ const List: React.FC<ListProps> = ({ recipeList, setIsAtEnd, increase }) => {
 
 	return (
 		<Grid
-			className={`${styles.recipe_list__container}`}
+			// className={`${styles.recipe_list__container}`}
 			columnCount={getColumnCount()}
 			columnWidth={() => {
 				const columnCount = getColumnCount();
 				return window.innerWidth / columnCount - 20;
 			}}
 			height={setGridHeight()} // Высота списка
-			rowCount={Math.ceil(recipeList.length / getColumnCount())}
+			rowCount={Math.ceil(filmList.length / getColumnCount())}
 			rowHeight={setItemHeight} // Высота элемента
 			width={window.innerWidth - 4} // Ширина списка
 			// style={{ overflowY: 'scroll', scrollbarWidth: 'none' }}
-			onScroll={handleScroll}
 		>
 			{({ columnIndex, rowIndex, style }: GridItemProps) => {
 				const index = rowIndex * getColumnCount() + columnIndex;
-				const item = recipeList[index];
+				const item = filmList[index];
 				if (!item) return null;
 
 				return (
 					<div
 						style={style}
-						className={styles.recipe_list__container_item}
+						// className={styles.recipe_list__container_item}
 					>
-						<Card
-							key={item.id}
-							actionSlot={<Button>Save</Button>}
-							captionSlot={item?.readyInMinutes + ' minutes'}
-							contentSlot={item.calories + ' kcal'}
-							image={item.image}
-							title={item.title}
-							subtitle={item.ingredients}
-							onButtonClick={onCardButtonClickHandler}
-							onItemClick={onCardItemClickHandler(item.id)}
-						/>
+						<FilmItem film={item} />
 					</div>
 				);
 			}}
