@@ -1,15 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { appReducer } from './AppStore/AppStore';
-import { filmListReducer } from './FilmListStore';
-import { filmPageReducer } from './FilmPageStore';
-import { filmSearchReducer } from './FilmSearchStore';
+import { filmListReducer } from './FilmStores/FilmListStore';
+import { filmPageReducer } from './FilmStores/FilmPageStore';
+import { filmSearchReducer } from './FilmStores/FilmSearchStore';
+import { filterReducer } from './FilterStore/FilterStore';
+import { pageReducer } from './PageStore';
 
 const store = configureStore({
 	reducer: {
-		app: appReducer,
 		filmList: filmListReducer,
 		filmPage: filmPageReducer,
 		filmSearch: filmSearchReducer,
+		filter: filterReducer,
+		page: pageReducer,
 	},
 });
 

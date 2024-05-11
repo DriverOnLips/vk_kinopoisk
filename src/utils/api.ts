@@ -21,8 +21,8 @@ export class Api {
 
 		// this.token = '65M503X-DGEMWBE-JSNXV9Y-384KZJR';
 		// this.token = 'BMQ0PHY-0SCM5Q8-JPZJ1P3-PV28JKJ';
-		this.token = 'FBZJA82-T40M4XZ-G2W29WD-V4DE583';
-		// this.token = '5M9EE5M-6AB4RSG-KKM19X2-HSJAX8Q';
+		// this.token = 'FBZJA82-T40M4XZ-G2W29WD-V4DE583';
+		this.token = '5M9EE5M-6AB4RSG-KKM19X2-HSJAX8Q';
 		// this.token = 'T2XXF72-5AXMJ6Y-N8AX3BT-ACBEVAH';
 		// this.token = 'ZX8ZGSZ-PYTM11R-NYKBY15-J29FXHB';
 		// this.token = 'R87RDPM-TD7M6QG-QHAPQD3-JP4QTNR';
@@ -42,7 +42,7 @@ export class Api {
 		page: number,
 		filmsAge?: string,
 		countryName?: string,
-	): Promise<FilmFromListResponse> => {
+	): Promise<FilmFromListResponse | Error> => {
 		const configItem = this.config.find(
 			(item) => item.name === 'getFilmsForList',
 		);
@@ -94,11 +94,13 @@ export class Api {
 				return res?.data;
 			})
 			.catch((error) => {
-				return error?.response?.data;
+				return new Error(
+					error instanceof Error ? error.message : String(error),
+				);
 			});
 	};
 
-	getFilmInfo = async (id: number): Promise<FilmApi> => {
+	getFilmInfo = async (id: number): Promise<FilmApi | Error> => {
 		const configItem = this.config.find((item) => item.name === 'getFilmInfo');
 
 		if (!configItem) {
@@ -116,11 +118,13 @@ export class Api {
 				return res?.data;
 			})
 			.catch((error) => {
-				return error?.response?.data;
+				return new Error(
+					error instanceof Error ? error.message : String(error),
+				);
 			});
 	};
 
-	getFilmReviews = async (id: number): Promise<FilmReviewResponse> => {
+	getFilmReviews = async (id: number): Promise<FilmReviewResponse | Error> => {
 		const configItem = this.config.find(
 			(item) => item.name === 'getFilmReviews',
 		);
@@ -160,11 +164,15 @@ export class Api {
 				return res?.data;
 			})
 			.catch((error) => {
-				return error?.response?.data;
+				return new Error(
+					error instanceof Error ? error.message : String(error),
+				);
 			});
 	};
 
-	searchFilm = async (name: string): Promise<FilmFromSearchResponse> => {
+	searchFilm = async (
+		name: string,
+	): Promise<FilmFromSearchResponse | Error> => {
 		const configItem = this.config.find((item) => item.name === 'searchFilm');
 
 		if (!configItem) {
@@ -189,7 +197,9 @@ export class Api {
 				return res?.data;
 			})
 			.catch((error) => {
-				return error?.response?.data;
+				return new Error(
+					error instanceof Error ? error.message : String(error),
+				);
 			});
 	};
 }

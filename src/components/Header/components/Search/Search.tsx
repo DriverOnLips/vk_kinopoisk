@@ -2,23 +2,25 @@ import cn from 'classnames';
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Dropdown, Form, Placeholder } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useApp } from 'hooks/useApp';
 import useDebounce from 'hooks/useDebounce';
 import { useFilmSearch } from 'hooks/useFilmSearch';
 import { FilmFromSearchModel } from 'types/FilmFromSearch';
+import { Meta } from 'utils/meta';
 import SearchItem from '../SearchItem/SearchItem';
 import styles from './Search.module.scss';
 
 const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 	buttonRef,
 }) => {
-	const { isSearchOpen, setIsSearchOpen } = useApp();
 	const {
 		filmsFromSearch,
 		filmsSearchHistory,
+		isSearchOpen,
+		meta,
 		setFilmsFromSearch,
 		deleteFilmsFromSearch,
 		addFilmToHistory,
+		setIsSearchOpen,
 	} = useFilmSearch();
 	const [searchText, setSearchText] = useState<string>('');
 	const debouncedSearchText = useDebounce(searchText, 1000);
@@ -104,7 +106,7 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 			className={cn(styles.header_searh, 'd-flex', 'flex-grow-1', 'px-3')}
 			ref={dropdownRef}
 		>
-			{(filmsFromSearch.length > 0 ||
+			{(meta === Meta.success ||
 				(isSearchOpen && filmsSearchHistory?.length > 0)) && (
 				<Dropdown.Menu
 					show={isSearchOpen}
@@ -123,7 +125,7 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 							<Dropdown.Divider />
 						</>
 					)}
-					{filmsFromSearch.length === 0 && searchText.length > 0 && (
+					{meta !== Meta.success && searchText.length > 0 && (
 						<Placeholder
 							as='p'
 							animation='glow'
@@ -134,7 +136,7 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 							<Placeholder xs={6} />{' '}
 						</Placeholder>
 					)}
-					{filmsFromSearch.length > 0 &&
+					{meta === Meta.success &&
 						filmsFromSearch.map((film: FilmFromSearchModel) => (
 							<SearchItem
 								key={film.id}

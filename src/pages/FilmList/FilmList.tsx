@@ -4,8 +4,9 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import MultiDropdown from 'components/MultiDropdown/MultiDropdown';
 import Paginator from 'components/Pagination/Pagination';
 import Slider from 'components/Slider/Slider';
-import { useApp } from 'hooks/useApp';
 import { useFilmList } from 'hooks/useFilmList';
+import { useFilter } from 'hooks/useFilter';
+import { usePage } from 'hooks/usePage';
 import { CountryType } from 'types/CountryType';
 import { FilmFromListModel } from 'types/FilmFromList';
 import { Meta } from 'utils/meta';
@@ -15,15 +16,8 @@ import styles from './FilmList.module.scss';
 
 const FilmsList: React.FC = () => {
 	const { meta, films, setFilms, deleteFilms } = useFilmList();
-	const {
-		page,
-		pages,
-		filmAge,
-		filmCountry,
-		setPage,
-		setFilmCountry,
-		setFilmAge,
-	} = useApp();
+	const { page, pages, setPage } = usePage();
+	const { filmAge, filmCountry, setFilmAge, setFilmCountry } = useFilter();
 
 	const onMultidropdownSelect = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>, country: CountryType) => {
