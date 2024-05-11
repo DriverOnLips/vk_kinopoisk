@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Paginator from 'components/Pagination/Pagination';
-import { useFilm } from 'hooks/useFilm';
 import { SimilarFilmsType } from 'types/Film';
 import styles from './SimilarFilms.module.scss';
 
@@ -11,14 +10,12 @@ const SimilarFilms: React.FC<{
 }> = ({ movies }) => {
 	const [page, setPage] = useState<number>(1);
 	const navigate = useNavigate();
-	const { deleteFilm } = useFilm();
 
 	const onFilmClick = useCallback(
 		(movieId: number) => () => {
-			deleteFilm();
 			navigate(`/film/${movieId}`);
 		},
-		[deleteFilm, navigate],
+		[navigate],
 	);
 
 	const onPaginationChange = useCallback(

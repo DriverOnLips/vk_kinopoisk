@@ -2,7 +2,6 @@ import cn from 'classnames';
 import React, { useCallback } from 'react';
 import { Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useFilm } from 'hooks/useFilm';
 import { FilmFromListModel } from 'types/FilmFromList';
 import styles from './FilmItem.module.scss';
 
@@ -10,14 +9,12 @@ const FilmItem: React.FC<{
 	film: FilmFromListModel;
 }> = ({ film }) => {
 	const navigate = useNavigate();
-	const { deleteFilm } = useFilm();
 
 	const handleClick = useCallback(
 		(movieId: number) => () => {
-			deleteFilm();
 			navigate(`/film/${movieId}`);
 		},
-		[deleteFilm, navigate],
+		[navigate],
 	);
 
 	return (

@@ -1,9 +1,10 @@
 import cn from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import Gallery from 'components/Gallery/Gallery';
-import { useFilm } from '../../hooks/useFilm';
+import { useFilmPage } from 'hooks/useFilmPage';
+import { Meta } from 'utils/meta';
 import FilmPagePlaceholder from './components/Placeholder/FilmPagePlaceholder';
 import ReviewItem from './components/ReviewItem/ReviewItem';
 import SimilarFilms from './components/SimilarFilms/SimilarFilms';
@@ -12,9 +13,8 @@ import styles from './FilmPage.module.scss';
 
 const FilmPage: React.FC = () => {
 	const { id } = useParams();
-	const { film, setFilm } = useFilm();
+	const { meta, film, setFilm, deleteFilm } = useFilmPage();
 	const navigate = useNavigate();
-	const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
 	const loadFilm = async () => {
 		if (id) {
@@ -23,17 +23,12 @@ const FilmPage: React.FC = () => {
 	};
 
 	useEffect(() => {
-		setIsLoaded(false);
 		loadFilm();
-	}, [id]);
 
-	useEffect(() => {
-		if (film?.id) {
-			setIsLoaded(true);
-		} else {
-			return;
-		}
-	}, [film]);
+		return () => {
+			deleteFilm();
+		};
+	}, [id]);
 
 	return (
 		<div className={styles.film_page}>
@@ -54,7 +49,7 @@ const FilmPage: React.FC = () => {
 					strokeLinejoin='round'
 				/>
 			</svg>
-			{isLoaded ? (
+			{meta === Meta.success ? (
 				<Container className={styles.film_page__film_info}>
 					<Row>
 						<Col

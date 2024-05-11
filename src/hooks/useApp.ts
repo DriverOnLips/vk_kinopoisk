@@ -9,7 +9,7 @@ import {
 } from 'stores/AppStore/AppStore';
 import { CountryType } from 'types/CountryType';
 
-export function useApp() {
+export const useApp = () => {
 	const { filmAge, filmCountry, page, pages, isSearchOpen }: AppState =
 		useSelector((store: any) => store.app);
 
@@ -46,4 +46,4 @@ export function useApp() {
 		setPages,
 		setIsSearchOpen,
 	};
-}
+};

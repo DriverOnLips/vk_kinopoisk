@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Meta } from '@utils/meta';
 import { FilmModel } from 'types/Film';
+import { Meta } from 'utils/meta';
 
 export type FilmPageState = {
 	film: FilmModel | null;
