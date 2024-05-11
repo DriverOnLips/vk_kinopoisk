@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { FilmApi } from 'types/Film';
 import { FilmFromListResponse } from 'types/FilmFromList';
+import { FilmReviewResponse } from 'types/FilmReview';
 
 export class Api {
 	private static instance: Api;
@@ -94,7 +96,7 @@ export class Api {
 			});
 	};
 
-	getFilmInfo = async (id: number): Promise<any> => {
+	getFilmInfo = async (id: number): Promise<FilmApi> => {
 		const configItem = this.config.find((item) => item.name === 'getFilmInfo');
 
 		if (!configItem) {
@@ -116,7 +118,7 @@ export class Api {
 			});
 	};
 
-	getFilmReviews = async (id: number): Promise<any> => {
+	getFilmReviews = async (id: number): Promise<FilmReviewResponse> => {
 		const configItem = this.config.find(
 			(item) => item.name === 'getFilmReviews',
 		);

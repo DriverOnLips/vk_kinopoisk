@@ -6,23 +6,26 @@ import {
 	SetFilmsFromSearch,
 	DeleteFilmsFromSearch,
 	AddFilmToHistory,
+	FilmState,
 } from 'stores/FilmStore';
 import { CountryType } from 'types/CountryType';
-import { FilmModel } from 'types/Film';
+import { FilmModel, normalizeFilm } from 'types/Film';
 import {
 	FilmFromListApi,
 	FilmFromListModel,
 	normalizeFilmFromList,
 } from 'types/FilmFromList';
 import { FilmFromSearchModel } from 'types/FilmFromSearch';
+import { FilmReviewApi, normalizeFilmReview } from 'types/FilmReview';
 import { Api } from 'utils/api';
 import { useApp } from './useApp';
 
 export function useFilm() {
 	const api = new Api();
-	const { film, films, filmsFromSearch, filmsSearchHistory } = useSelector(
-		(store: any) => store.film,
-	);
+
+	const { film, films, filmsFromSearch, filmsSearchHistory }: FilmState =
+		useSelector((state: any) => state.film);
+
 	const { setPage, setPages } = useApp();
 
 	const dispatch = useDispatch();
@@ -53,48 +56,14 @@ export function useFilm() {
 	};
 
 	const setFilm = async (id: number) => {
-		let response = await api.getFilmInfo(id);
+		const response = await api.getFilmInfo(id);
 
-		const filmFromResponse: FilmModel = {
-			id: response.id,
-			name: response.name,
-			description: response.description,
-			rating: response.rating?.kp,
-			photo: response.poster?.previewUrl,
-			age: response.ageRating,
-			year: response.year,
-			country: response.countries?.[0]?.name,
-			genres: response.genres
-				?.map((genre: any) => {
-					return genre.name;
-				})
-				.join(', '),
-			similarMovies: response.similarMovies?.map((movie: any) => {
-				return {
-					id: movie.id,
-					name: movie.name,
-					photo: movie.poster.previewUrl,
-				};
-			}),
-			reviews: [],
-		};
+		const filmFromResponse: FilmModel = normalizeFilm(response);
 
-		response = await api.getFilmReviews(id);
-		filmFromResponse.reviews = response?.docs?.map((item: any) => {
-			return {
-				id: item.id,
-				username: item.author,
-				title: item.title,
-				type: item.type,
-				review: item.review,
-				date: item.date
-					.slice(0, item.date.indexOf('T'))
-					.replaceAll('-', '.')
-					.split('.')
-					.reverse()
-					.join('.'),
-			};
-		});
+		const reviews = await api.getFilmReviews(id);
+		filmFromResponse.reviews = reviews?.docs?.map((review: FilmReviewApi) =>
+			normalizeFilmReview(review),
+		);
 
 		dispatch(SetFilm(filmFromResponse));
 	};

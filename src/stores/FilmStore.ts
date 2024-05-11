@@ -3,7 +3,7 @@ import { FilmModel } from 'types/Film';
 import { FilmFromListModel } from 'types/FilmFromList';
 import { FilmFromSearchModel } from 'types/FilmFromSearch';
 
-type FilmState = {
+export type FilmState = {
 	films: FilmFromListModel[];
 	film: FilmModel | null;
 	filmsFromSearch: FilmFromSearchModel[];

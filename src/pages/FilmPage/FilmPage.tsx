@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './FilmPage.scss';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFilm } from '../../hooks/useFilm';
-import Actors from './components/Actors/Actors';
-import FilmPagePlaceholder from './components/FilmPagePlaceholder/FilmPagePlaceholder';
-import PostersCarousel from './components/Posters/Posters';
+import FilmPagePlaceholder from './components/Placeholder/FilmPagePlaceholder';
 import Reviews from './components/Reviews/Reviews';
-import Series from './components/Seasons/Seasons';
-import SimilarMovies from './components/SimilarMovies/SimilarMovies';
+import SimilarFilms from './components/SimilarFilms/SimilarFilms';
 
 const FilmPage: React.FC = () => {
 	const { id } = useParams();
@@ -30,6 +26,8 @@ const FilmPage: React.FC = () => {
 	useEffect(() => {
 		if (film?.id) {
 			setIsLoaded(true);
+		} else {
+			return;
 		}
 	}, [film]);
 
@@ -87,8 +85,7 @@ const FilmPage: React.FC = () => {
 										style={{ padding: '0' }}
 									>
 										<span className='film_info__about__genres'>
-											{film?.genres.charAt(0).toLocaleUpperCase() +
-												film?.genres.slice(1)}
+											{film?.genre}
 										</span>
 									</Col>
 								</Row>
@@ -106,64 +103,20 @@ const FilmPage: React.FC = () => {
 										style={{ padding: '0' }}
 									>
 										<span className='film_info__about__rating'>
-											Рейтинг: {Math.round(film?.rating * 100) / 100}
+											Рейтинг: {Math.round(film!.rating * 100) / 100}
 										</span>
 									</Col>
 								</Row>
 							</div>
-							<Row className='posters-main my-5'>
-								<Col className='film_info__posters'>
-									<span className='film_info__posters-span'>Постеры:</span>
-									{film?.posters?.length > 0 ? (
-										<PostersCarousel posters={film.posters} />
-									) : (
-										<span className='film_info__no_posters-span mb-2'>
-											Отсутствуют
-										</span>
-									)}
-								</Col>
-							</Row>
 						</Col>
-						<Row className='posters-mobile'>
-							<Col className='posters-mobile-div'>
-								<span className='posters-mobile-span'>Постеры:</span>
-								{film?.posters?.length > 0 ? (
-									<PostersCarousel posters={film.posters} />
-								) : (
-									<span className='film_info__no_posters-mobile-span mb-2'>
-										Отсутствуют
-									</span>
-								)}
-							</Col>
-						</Row>
-					</Row>
-					<Row className='my-3 film__actors'>
-						<span className='film__actors-span mb-2'>Актеры:</span>
-						{film?.actors?.length > 0 ? (
-							<Actors actors={film?.actors} />
-						) : (
-							<span className='film__actors__no_actors-span mb-2'>
-								Актерский состав не известен
-							</span>
-						)}
 					</Row>
 					<Row className='film__reviews'>
 						<span className='film__reviews-span mb-2'>Отзывы:</span>
-						{film?.reviews?.length > 0 ? (
-							<Reviews reviews={film?.reviews} />
+						{film!.reviews!.length > 0 ? (
+							<Reviews reviews={film!.reviews} />
 						) : (
 							<span className='film__reviews__no_reviews-span mb-2'>
 								Отзывов пока нет
-							</span>
-						)}
-					</Row>
-					<Row className='film__series my-3'>
-						<span className='film__series-span mb-2'>Сезоны:</span>
-						{film?.isSeries ? (
-							<Series seasons={film.seasons} />
-						) : (
-							<span className='film__series__no_series-span mb-2'>
-								Фильм не имеет сезонов
 							</span>
 						)}
 					</Row>
@@ -171,8 +124,8 @@ const FilmPage: React.FC = () => {
 						<span className='film__similar-span mb-2'>
 							Вам может понравиться:
 						</span>
-						{film?.similarMovies?.length > 0 ? (
-							<SimilarMovies movies={film?.similarMovies} />
+						{film!.similarFilms.length > 0 ? (
+							<SimilarFilms movies={film!.similarFilms} />
 						) : (
 							<span className='film__similar__no_similar-span mb-2'>
 								Похожих фильмов не нашлось

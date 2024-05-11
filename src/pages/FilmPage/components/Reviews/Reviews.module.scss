@@ -1,0 +1,30 @@
+.reviews {
+	max-width: 90vw !important;
+
+	.reviews_carousel {
+		display: flex;
+		gap: 1rem;
+		padding: 0 50px;
+	}
+
+	.carousel {
+		.carousel-control-next {
+			width: auto;
+		}
+		.carousel-control-prev {
+			width: auto;
+		}
+
+		.carousel-indicators {
+			display: none;
+		}
+	}
+}
+
+@media screen and (max-width: 650px) {
+	.reviews {
+		.reviews_carousel {
+			padding: 0;
+		}
+	}
+}

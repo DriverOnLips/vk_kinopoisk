@@ -17,7 +17,7 @@ const getSettingsForStyles = (withModules = false) => {
 					options: {
 						defaultExport: true,
 					},
-			  }
+				}
 			: 'style-loader',
 		!withModules
 			? 'css-loader'
@@ -30,7 +30,7 @@ const getSettingsForStyles = (withModules = false) => {
 								: '[hash:base64]',
 						},
 					},
-			  },
+				},
 		{
 			loader: 'postcss-loader',
 			options: {
@@ -50,6 +50,7 @@ module.exports = {
 	output: {
 		path: buildPath,
 		filename: 'bundle.js',
+		publicPath: '/',
 	},
 	plugins: [
 		new HtmlWebpackPlugin({

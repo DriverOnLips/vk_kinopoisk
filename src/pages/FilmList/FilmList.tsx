@@ -9,7 +9,7 @@ import { useFilm } from 'hooks/useFilm';
 import { CountryType } from 'types/CountryType';
 import { FilmFromListModel } from 'types/FilmFromList';
 import FilmItem from './components/FilmItem/FilmItem';
-import FilmItemPlaceholder from './components/FilmItemPlaceholder/FilmItemPlaceholder';
+import FilmItemPlaceholder from './components/Paceholder/FilmItemPlaceholder';
 import styles from './FilmList.module.scss';
 
 const FilmsList: React.FC = () => {
