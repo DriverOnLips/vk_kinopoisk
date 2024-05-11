@@ -1,0 +1,12 @@
+.header_searh {
+	position: relative;
+
+	&__dropdown {
+		top: 120% !important;
+		left: 15px !important;
+
+		max-height: 80vh;
+		max-width: calc(100% - 35px);
+		overflow-y: auto;
+	}
+}

@@ -1,0 +1,20 @@
+@import "./vars.scss";
+
+html,
+#root {
+	background-color: $background-color;
+}
+
+div {
+	color: $text-color;
+}
+
+button {
+	font-size: $size6 !important;
+}
+
+@media screen and (max-width: 330px) {
+	button {
+		font-size: $size6 !important;
+	}
+}

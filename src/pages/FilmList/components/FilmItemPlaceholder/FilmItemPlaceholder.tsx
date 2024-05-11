@@ -1,19 +1,21 @@
-import React from 'react';
+import cn from 'classnames';
+import React, { memo } from 'react';
 import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
+import styles from './FilmItemPlaceholder.module.scss';
 
 function FilmItemPlaceholder() {
 	return (
-		<Card className='film_item-placeholder'>
+		<Card className={styles.film_item_placeholder}>
 			<Placeholder
-				className='film_item-placeholder_img'
+				className={styles['film_item_placeholder-img']}
 				as={Card.Img}
 				animation='glow'
 			/>
 
-			<Card.Body className='film_item-placeholder_body'>
+			<Card.Body>
 				<Placeholder
-					className='placeholder_title mt-2 mb-4'
+					className={cn(styles.film_item_placeholder__title, 'mt-2', 'mb-4')}
 					as={Card.Title}
 					animation='glow'
 				>
@@ -25,7 +27,7 @@ function FilmItemPlaceholder() {
 				<Placeholder
 					as={Card.Text}
 					animation='glow'
-					className='placeholder_text'
+					className={styles.film_item_placeholder__text}
 				>
 					<Placeholder xs={4} /> <Placeholder xs={4} />
 				</Placeholder>
@@ -34,4 +36,4 @@ function FilmItemPlaceholder() {
 	);
 }
 
-export default FilmItemPlaceholder;
+export default memo(FilmItemPlaceholder);

@@ -1,0 +1,68 @@
+@import "styles/vars.scss";
+
+.search_item {
+	&__photo {
+		width: 70px;
+
+		&-img {
+			width: 100%;
+			aspect-ratio: 2 / 3;
+			object-fit: cover;
+		}
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		&__name {
+			width: 100%;
+			text-wrap: wrap;
+			margin: 0;
+			font-size: $size6;
+			padding-bottom: 0.5rem;
+		}
+
+		&__country_year {
+			justify-content: space-between;
+			margin-right: 0;
+
+			.search_item__info__country {
+				width: auto;
+				font-size: $size6;
+			}
+
+			.search-item__info__year {
+				width: auto;
+				font-size: $size6;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 815px) {
+	.search-item {
+		.search-item__photo {
+			width: 60px;
+		}
+
+		.search-item__info {
+			max-width: 68%;
+
+			.search-item__info__name {
+				font-size: $size7;
+			}
+
+			.search-item__info__country_year {
+				.search-item__info__country {
+					font-size: $size7;
+				}
+
+				.search-item__info__year {
+					font-size: $size7;
+				}
+			}
+		}
+	}
+}

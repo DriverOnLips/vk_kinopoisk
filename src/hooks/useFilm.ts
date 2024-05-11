@@ -9,7 +9,11 @@ import {
 } from 'stores/FilmStore';
 import { CountryType } from 'types/CountryType';
 import { FilmModel } from 'types/Film';
-import { FilmFromListModel } from 'types/FilmFromList';
+import {
+	FilmFromListApi,
+	FilmFromListModel,
+	normalizeFilmFromList,
+} from 'types/FilmFromList';
 import { FilmFromSearchModel } from 'types/FilmFromSearch';
 import { Api } from 'utils/api';
 import { useApp } from './useApp';
@@ -36,19 +40,7 @@ export function useFilm() {
 
 		const response = await api.getFilmsForList(page, ageRating, countryName);
 		const filmsFromResponse: FilmFromListModel[] = response?.docs?.map(
-			(item: any) => {
-				return {
-					id: item.id,
-					name: item.name,
-					rating: item.rating.kp,
-					photo: item.poster.previewUrl,
-					trailer: item.videos?.trailers[0]?.url,
-					year: item.year,
-					genre:
-						item.genres[0].name.charAt(0).toLocaleUpperCase() +
-						item.genres[0].name.slice(1),
-				};
-			},
+			(film: FilmFromListApi) => normalizeFilmFromList(film),
 		);
 
 		dispatch(SetFilms(filmsFromResponse));
