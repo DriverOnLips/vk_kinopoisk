@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import React from 'react';
+import React, { memo } from 'react';
 import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
 import styles from './FilmItemPlaceholder.module.scss';
@@ -36,4 +36,4 @@ function FilmItemPlaceholder() {
 	);
 }
 
-export default FilmItemPlaceholder;
+export default memo(FilmItemPlaceholder);

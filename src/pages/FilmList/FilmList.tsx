@@ -3,11 +3,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import MultiDropdown from 'components/MultiDropdown/MultiDropdown';
 import Paginator from 'components/Pagination/Pagination';
+import Slider from 'components/Slider/Slider';
 import { useApp } from 'hooks/useApp';
 import { useFilm } from 'hooks/useFilm';
 import { CountryType } from 'types/CountryType';
 import { FilmFromListModel } from 'types/FilmFromList';
-import FilmsAgeSelector from '../../components/Slider/Slider';
 import FilmItem from './components/FilmItem/FilmItem';
 import FilmItemPlaceholder from './components/FilmItemPlaceholder/FilmItemPlaceholder';
 import styles from './FilmList.module.scss';
@@ -77,7 +77,7 @@ const FilmsList: React.FC = () => {
 					items={filmCountry}
 					onClick={onMultidropdownSelect}
 				/>
-				<FilmsAgeSelector
+				<Slider
 					item={filmAge}
 					onSliderChange={onSliderChange}
 					onButtonClick={onSliderButtonClick}

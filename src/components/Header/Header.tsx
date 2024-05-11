@@ -1,13 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Navbar, Container, Offcanvas } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Search from './components/Search/Search';
 
 function Header() {
 	const navigate = useNavigate();
 	const closeButtonRef = useRef<HTMLDivElement>(null);
+	const location = useLocation();
 
-	const handleClickLogo = () => {
+	const onLogoClick = useCallback(() => {
 		closeButtonRef?.current?.getElementsByTagName('button')[0].click();
 
 		if (location.pathname === '/') {
@@ -15,7 +16,7 @@ function Header() {
 		} else {
 			navigate('/');
 		}
-	};
+	}, [navigate, location.pathname]);
 
 	return (
 		<>
@@ -29,10 +30,10 @@ function Header() {
 				<Container fluid>
 					<Navbar.Brand
 						style={{ cursor: 'pointer' }}
-						onClick={handleClickLogo}
+						onClick={onLogoClick}
 						className='text-light'
 					>
-						Кинопоиск
+						Кино
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
 					<Navbar.Offcanvas
@@ -49,9 +50,9 @@ function Header() {
 							<Offcanvas.Title
 								id={`offcanvasNavbarLabel-expand-sm`}
 								className='text-light'
-								onClick={handleClickLogo}
+								onClick={onLogoClick}
 							>
-								Кинопоиск
+								Кино
 							</Offcanvas.Title>
 						</Offcanvas.Header>
 						<Offcanvas.Body style={{ justifyContent: 'center' }}>

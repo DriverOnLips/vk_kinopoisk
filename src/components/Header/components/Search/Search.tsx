@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Dropdown, Form, Placeholder } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from 'hooks/useApp';
@@ -29,53 +29,67 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 		[],
 	);
 
-	const loadFilms = async (name: string) => {
-		if (!name) return;
-		await setFilmsFromSearch(name);
-	};
+	const loadFilms = useCallback(
+		async (name: string) => {
+			if (!name) return;
+			await setFilmsFromSearch(name);
+		},
+		[setFilmsFromSearch],
+	);
 
-	const handlerOnChangeInput = (e: any) => {
-		setSearchText(e.target.value);
+	const onInputChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			setSearchText(e.target.value);
 
-		const query = e.target.value.trim();
+			const query = e.target.value.trim();
 
-		if (query.length > 0) {
-			setFilmsToSuggest(
-				filmsSearchHistory.filter((film: FilmFromSearchModel) =>
-					film.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
-				),
-			);
-		} else {
-			setFilmsToSuggest([]);
-		}
-	};
+			if (query.length > 0) {
+				setFilmsToSuggest(
+					filmsSearchHistory.filter((film: FilmFromSearchModel) =>
+						film.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
+					),
+				);
+			} else {
+				setFilmsToSuggest([]);
+			}
+		},
+		[filmsSearchHistory],
+	);
 
-	const handlerOnClickDropdown = (film: FilmFromSearchModel) => {
-		setIsSearchOpen(false);
-		setSearchText('');
-		buttonRef.current?.getElementsByTagName('button')[0].click();
-		if (location.pathname !== `/film/${film.id}`) {
-			addFilmToHistory(film);
-			deleteFilm();
-			navigate(`/film/${film.id}`);
-		}
-	};
+	const onDropdownClick = useCallback(
+		(film: FilmFromSearchModel) => {
+			setIsSearchOpen(false);
+			setSearchText('');
+
+			buttonRef.current?.getElementsByTagName('button')[0].click();
+			if (location.pathname !== `/film/${film.id}`) {
+				addFilmToHistory(film);
+				deleteFilm();
+				navigate(`/film/${film.id}`);
+			}
+		},
+		[buttonRef, addFilmToHistory, deleteFilm, navigate, setIsSearchOpen],
+	);
+
+	const onInputFocus = useCallback(
+		() => setIsSearchOpen(true),
+		[setIsSearchOpen],
+	);
 
 	useEffect(() => {
-		if (searchText.length === 0) {
-			deleteFilmsFromSearch();
-		}
+		searchText.length === 0 ? deleteFilmsFromSearch() : null;
 	}, [searchText]);
 
 	useEffect(() => {
-		if (debouncedSearchText) {
-			loadFilms(debouncedSearchText.trim());
-		}
+		debouncedSearchText ? loadFilms(debouncedSearchText.trim()) : null;
 	}, [debouncedSearchText]);
 
 	useEffect(() => {
-		const handleClickOutside = (event: any) => {
-			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				dropdownRef.current &&
+				!dropdownRef.current.contains(event.target as Node)
+			) {
 				setIsSearchOpen(false);
 			}
 		};
@@ -105,7 +119,7 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 								<SearchItem
 									key={film.id}
 									film={film}
-									handlerOnClickDropdown={handlerOnClickDropdown}
+									onDropdownClick={onDropdownClick}
 								/>
 							))}
 							<Dropdown.Divider />
@@ -127,7 +141,7 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 							<SearchItem
 								key={film.id}
 								film={film}
-								handlerOnClickDropdown={handlerOnClickDropdown}
+								onDropdownClick={onDropdownClick}
 							/>
 						))}
 					{filmsSearchHistory?.length > 0 && (
@@ -138,7 +152,7 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 								<SearchItem
 									key={film.id}
 									film={film}
-									handlerOnClickDropdown={handlerOnClickDropdown}
+									onDropdownClick={onDropdownClick}
 								/>
 							))}
 						</>
@@ -151,8 +165,8 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 				className='me-2'
 				aria-label='Search'
 				value={searchText}
-				onChange={(e) => handlerOnChangeInput(e)}
-				onFocus={() => setIsSearchOpen(true)}
+				onChange={onInputChange}
+				onFocus={onInputFocus}
 			/>
 		</Form>
 	);

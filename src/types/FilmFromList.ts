@@ -21,6 +21,12 @@ export type FilmFromListApi = {
 	genres: FilmFromListGenre[];
 };
 
+export type FilmFromListResponse = {
+	docs: FilmFromListApi[];
+	page: number;
+	pages: number;
+};
+
 export type FilmFromListModel = {
 	id: number;
 	name: string;

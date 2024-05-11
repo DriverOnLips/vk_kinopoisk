@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { FilmFromListResponse } from 'types/FilmFromList';
 
 export class Api {
 	private static instance: Api;
@@ -38,7 +39,7 @@ export class Api {
 		page: number,
 		filmsAge?: string,
 		countryName?: string,
-	): Promise<any> => {
+	): Promise<FilmFromListResponse> => {
 		const configItem = this.config.find(
 			(item) => item.name === 'getFilmsForList',
 		);

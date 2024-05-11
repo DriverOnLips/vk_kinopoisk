@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useFilm } from 'hooks/useFilm';
@@ -12,16 +12,19 @@ const FilmItem: React.FC<{
 	const navigate = useNavigate();
 	const { deleteFilm } = useFilm();
 
-	const handleClick = (movieId: number) => {
-		deleteFilm();
-		navigate(`/film/${movieId}`);
-	};
+	const handleClick = useCallback(
+		(movieId: number) => () => {
+			deleteFilm();
+			navigate(`/film/${movieId}`);
+		},
+		[deleteFilm, navigate],
+	);
 
 	return (
 		<Card
 			className={styles['film_item-card']}
 			id={String(film.id)}
-			onClick={() => handleClick(film.id)}
+			onClick={handleClick(film.id)}
 		>
 			<Card.Img
 				className={styles['film_item-card__img']}
