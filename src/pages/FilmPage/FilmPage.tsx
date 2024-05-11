@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -5,6 +6,8 @@ import { useFilm } from '../../hooks/useFilm';
 import FilmPagePlaceholder from './components/Placeholder/FilmPagePlaceholder';
 import Reviews from './components/Reviews/Reviews';
 import SimilarFilms from './components/SimilarFilms/SimilarFilms';
+
+import styles from './FilmPage.module.scss';
 
 const FilmPage: React.FC = () => {
 	const { id } = useParams();
@@ -32,9 +35,9 @@ const FilmPage: React.FC = () => {
 	}, [film]);
 
 	return (
-		<div id='film_page'>
+		<div id={styles.film_page}>
 			<svg
-				className='arrow-back'
+				className={styles.film_page__arrow_back}
 				width='36'
 				height='34'
 				viewBox='0 0 360 336'
@@ -51,40 +54,61 @@ const FilmPage: React.FC = () => {
 				/>
 			</svg>
 			{isLoaded ? (
-				<Container className='film_info'>
+				<Container className={styles.film_page__film_info}>
 					<Row>
 						<Col
 							sm={5}
-							className='film_info__photo'
+							className={styles.film_page__film_info__photo}
 						>
 							<img
 								src={film?.photo}
-								className='film_info__photo-img'
+								className={styles['film_page__film_info__photo-img']}
 							/>
 						</Col>
 						<Col
 							sm={7}
-							className='film_info-div'
+							className={styles['film_page__film_info-div']}
 						>
-							<div className='film_info__about'>
-								<span className='film_info__about__name'>{film?.name}</span>
+							<div className={styles['film_page__film_info-div__about']}>
+								<span
+									className={styles['film_page__film_info-div__about__name']}
+								>
+									{film?.name}
+								</span>
 
-								<Row className='film_info__about__country_genres mb-4'>
+								<Row
+									className={cn(
+										styles['film_page__film_info-div__about__country_genres'],
+										'mb-4',
+									)}
+								>
 									<Col
 										sm={6}
-										className='film_info__about__country-div'
+										className={
+											styles['film_page__film_info-div__about__country-div']
+										}
 										style={{ padding: '0' }}
 									>
-										<span className='film_info__about__country'>
+										<span
+											className={
+												styles['film_page__film_info-div__about__country']
+											}
+										>
 											{film?.country}, {film?.year}
 										</span>
 									</Col>
 									<Col
 										sm={6}
-										className='film_info__about__genres-div'
+										className={
+											styles['film_page__film_info-div__about__genres-div']
+										}
 										style={{ padding: '0' }}
 									>
-										<span className='film_info__about__genres'>
+										<span
+											className={
+												styles['film_page__film_info-div__about__genres']
+											}
+										>
 											{film?.genre}
 										</span>
 									</Col>
@@ -92,17 +116,30 @@ const FilmPage: React.FC = () => {
 
 								<Row className='mb-4'>
 									<Col>
-										<span className='film_info__about__description-span'>
+										<span
+											className={
+												styles['film_page__film_info-div__about__description']
+											}
+										>
 											{film?.description}
 										</span>
 									</Col>
 								</Row>
-								<Row className='film_info__about__rating_series mb-4'>
+								<Row
+									className={cn(
+										styles['film_page__film_info-div__about__rating_series'],
+										'mb-4',
+									)}
+								>
 									<Col
 										sm={6}
 										style={{ padding: '0' }}
 									>
-										<span className='film_info__about__rating'>
+										<span
+											className={
+												styles['film_page__film_info-div__about__rating']
+											}
+										>
 											Рейтинг: {Math.round(film!.rating * 100) / 100}
 										</span>
 									</Col>
@@ -110,24 +147,46 @@ const FilmPage: React.FC = () => {
 							</div>
 						</Col>
 					</Row>
-					<Row className='film__reviews'>
-						<span className='film__reviews-span mb-2'>Отзывы:</span>
-						{film!.reviews!.length > 0 ? (
+					<Row className={styles.film_page__film_info__reviews}>
+						<span
+							className={cn(
+								styles['film_page__film_info__reviews-span'],
+								'mb-2',
+							)}
+						>
+							Отзывы:
+						</span>
+						{film!.reviews?.length > 0 ? (
 							<Reviews reviews={film!.reviews} />
 						) : (
-							<span className='film__reviews__no_reviews-span mb-2'>
+							<span
+								className={cn(
+									styles['film_page__film_info__reviews__no_reviews-span'],
+									'mb-2',
+								)}
+							>
 								Отзывов пока нет
 							</span>
 						)}
 					</Row>
-					<Row className='film__similar my-3'>
-						<span className='film__similar-span mb-2'>
+					<Row className={cn(styles.film_page__film_info__similar, 'my-3')}>
+						<span
+							className={cn(
+								styles['film_page__film_info__similar-span'],
+								'mb-2',
+							)}
+						>
 							Вам может понравиться:
 						</span>
-						{film!.similarFilms.length > 0 ? (
+						{film!.similarFilms?.length > 0 ? (
 							<SimilarFilms movies={film!.similarFilms} />
 						) : (
-							<span className='film__similar__no_similar-span mb-2'>
+							<span
+								className={cn(
+									styles['film_page__film_info__similar__no_similar-span'],
+									'mb-2',
+								)}
+							>
 								Похожих фильмов не нашлось
 							</span>
 						)}

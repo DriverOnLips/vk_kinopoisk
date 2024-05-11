@@ -1,3 +1,4 @@
+import { CountryType } from './CountryType';
 import { FilmReviewModel } from './FilmReview';
 
 export type SimilarFilmsType = {
@@ -54,7 +55,7 @@ export type FilmModel = {
 export const normalizeFilm = (from: FilmApi): FilmModel => ({
 	...from,
 	age: from.ageRating,
-	country: from.countries.join(', '),
+	country: from.countries.map((ctr: FilmCountry) => ctr.name).join(', '),
 	photo: from.poster.previewUrl,
 	genre: from.genres
 		.map(

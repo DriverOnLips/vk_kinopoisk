@@ -1,4 +1,4 @@
-@use "../../styles/font-sizes.scss" as fonts;
+@import "styles/vars.scss";
 
 #film_page {
 	position: relative;
@@ -6,7 +6,7 @@
 	display: flex;
 	flex-direction: column;
 
-	.arrow-back {
+	&__arrow_back {
 		position: fixed;
 		top: 56px;
 		left: 0;
@@ -15,378 +15,93 @@
 		cursor: pointer;
 	}
 
-	.film_info {
+	&__film_info {
 		max-width: 100%;
-	}
 
-	.film_info__photo {
-		padding-left: 0;
-	}
+		&__photo {
+			padding-left: 0;
 
-	.film_info__photo-img {
-		width: 100%;
-		mask-image: linear-gradient(
-			to left,
-			transparent 5%,
-			rgba(0, 0, 0, 1) 70%,
-			black 100%
-		);
-	}
-
-	.film_info-div {
-		padding-right: 2rem;
-
-		.film_info__about {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-
-			.film_info__about__name {
-				margin: 2rem 0;
-				font-size: fonts.$size2;
-				text-align: center;
-			}
-
-			.film_info__about__country_genres {
+			&-img {
 				width: 100%;
-				justify-content: space-between;
-
-				.film_info__about__country {
-					padding-right: 1rem;
-					font-size: fonts.$size4;
-				}
-
-				.film_info__about__genres {
-					display: flex;
-					justify-content: end;
-					font-size: fonts.$size4;
-					text-align: end;
-				}
-			}
-
-			.film_info__about__description-span {
-				font-size: fonts.$size4;
-			}
-
-			.film_info__about__rating_series {
-				width: 100%;
-				justify-content: space-between;
-
-				.film_info__about__rating {
-					font-size: fonts.$size4;
-				}
-
-				.film_info__about__series {
-					display: flex;
-					justify-content: end;
-					font-size: fonts.$size4;
-				}
+				mask-image: linear-gradient(
+					to left,
+					transparent 5%,
+					rgba(0, 0, 0, 1) 70%,
+					black 100%
+				);
 			}
 		}
 
-		.posters-main {
-			.film_info__posters {
-				width: 55vw;
+		&-div {
+			padding-right: 2rem;
 
-				.film_info__posters-span {
-					font-size: fonts.$size3;
-				}
-
-				.film_info__no_posters-span {
-					text-align: center;
-					font-size: fonts.$size4;
-					padding-left: 1rem;
-				}
-			}
-		}
-	}
-
-	.posters-mobile {
-		display: none;
-	}
-
-	.film__actors {
-		padding: 0 2rem;
-
-		.film__actors-span {
-			text-align: center;
-			font-size: fonts.$size3;
-		}
-
-		.film__actors__no_actors-span {
-			text-align: center;
-			font-size: fonts.$size4;
-		}
-	}
-
-	.film__reviews {
-		.film__reviews-span {
-			text-align: center;
-			font-size: fonts.$size3;
-		}
-
-		.film__reviews__no_reviews-span {
-			text-align: center;
-			font-size: fonts.$size4;
-		}
-	}
-
-	.film__series {
-		padding: 0 2rem;
-
-		.film__series-span {
-			text-align: center;
-			font-size: fonts.$size3;
-		}
-
-		.film__series__no_series-span {
-			text-align: center;
-			font-size: fonts.$size4;
-		}
-	}
-
-	.film__similar {
-		padding: 0 2rem;
-
-		.film__similar-span {
-			text-align: center;
-			font-size: fonts.$size3;
-		}
-
-		.film__similar__no_similar-span {
-			text-align: center;
-			font-size: fonts.$size4;
-		}
-	}
-}
-
-@media screen and (max-width: 1700px) {
-	#film_page {
-		.film_info-div {
-			.posters-main {
-				.film_info__posters {
-					width: 40vw;
-				}
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 1400px) {
-	#film_page {
-		.film_info-div {
-			.posters-main {
-				display: none;
-			}
-		}
-
-		.posters-mobile {
-			display: flex;
-			margin: 1rem 0;
-			padding: 0 2rem;
-
-			.posters-mobile-div {
+			&__about {
 				display: flex;
 				flex-direction: column;
-				justify-content: center;
-				width: 60vw;
+				align-items: center;
 
-				.posters-mobile-span {
-					text-align: center;
-					font-size: fonts.$size3;
-				}
-
-				.film_info__no_posters-mobile-span {
-					text-align: center;
-					font-size: fonts.$size4;
-				}
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 1000px) {
-	#film_page {
-		.film_info-div {
-			.film_info__about {
-				.film_info__about__name {
-					margin: 1rem 0;
-					font-size: fonts.$size3;
-				}
-
-				.film_info__about__country_genres {
-					.film_info__about__country {
-						font-size: fonts.$size5;
-					}
-
-					.film_info__about__genres {
-						font-size: fonts.$size5;
-					}
-				}
-
-				.film_info__about__description-span {
-					font-size: fonts.$size5;
-				}
-
-				.film_info__about__rating_series {
-					.film_info__about__rating {
-						font-size: fonts.$size5;
-					}
-
-					.film_info__about__series {
-						font-size: fonts.$size5;
-					}
-				}
-			}
-		}
-
-		.posters-mobile {
-			.posters-mobile-div {
-				.posters-mobile-span {
-					font-size: fonts.$size4;
-				}
-
-				.film_info__no_posters-mobile-span {
-					font-size: fonts.$size5;
-				}
-			}
-		}
-
-		.film__actors {
-			.film__actors-span {
-				font-size: fonts.$size4;
-			}
-
-			.film__actors__no_actors-span {
-				font-size: fonts.$size5;
-			}
-		}
-
-		.film__reviews {
-			.film__reviews-span {
-				font-size: fonts.$size4;
-			}
-
-			.film__reviews__no_reviews-span {
-				font-size: fonts.$size5;
-			}
-		}
-
-		.film__series {
-			.film__series-span {
-				text-align: center;
-				font-size: fonts.$size4;
-			}
-
-			.film__series__no_series-span {
-				text-align: center;
-				font-size: fonts.$size5;
-			}
-		}
-
-		.film__similar {
-			.film__similar-span {
-				text-align: center;
-				font-size: fonts.$size4;
-			}
-
-			.film__similar__no_similar-span {
-				font-size: fonts.$size5;
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 850px) {
-	#film_page {
-		.film_info-div {
-			.film_info__about {
-				.film_info__about__name {
+				&__name {
 					margin: 2rem 0;
-					font-size: fonts.$size4;
+					font-size: $size2;
+					text-align: center;
 				}
 
-				.film_info__about__country_genres {
-					.film_info__about__country {
-						font-size: fonts.$size6;
+				&__country_genres {
+					width: 100%;
+					justify-content: space-between;
+
+					.film_page__film_info-div__about__country {
+						padding-right: 1rem;
+						font-size: $size4;
 					}
 
-					.film_info__about__genres {
-						font-size: fonts.$size6;
+					.film_page__film_info-div__about__genres {
+						display: flex;
+						justify-content: end;
+						font-size: $size4;
+						text-align: end;
 					}
 				}
 
-				.film_info__about__description-span {
-					font-size: fonts.$size6;
+				&__description {
+					font-size: $size4;
 				}
 
-				.film_info__about__rating_series {
-					.film_info__about__rating {
-						font-size: fonts.$size6;
+				&__rating_series {
+					width: 100%;
+					justify-content: space-between;
+
+					.film_page__film_info-div__about__rating {
+						font-size: $size4;
 					}
-
-					.film_info__about__series {
-						font-size: fonts.$size6;
-					}
-				}
-			}
-
-			.posters-main {
-				.film_info__posters {
-					.film_info__posters-span {
-						font-size: fonts.$size6;
-					}
-				}
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 779px) {
-	#film_page {
-		.arrow-back {
-			top: 86px;
-			margin: 0.5rem;
-		}
-	}
-}
-
-@media screen and (max-width: 650px) {
-	#film_page {
-		.arrow-back {
-			top: 56px;
-		}
-
-		.film_info__photo {
-			padding: 0;
-		}
-
-		.film_info__photo-img {
-			width: 100%;
-			mask-image: none;
-		}
-
-		.film_info-div {
-			.film_info__about {
-				.film_info__about__name {
-					margin: 1rem 0;
-				}
-
-				.film_info__about__country-div,
-				.film_info__about__genres-div {
-					width: auto;
 				}
 			}
 		}
 
-		.posters-mobile {
-			padding: 0;
+		&__reviews {
+			&-span {
+				text-align: center;
+				font-size: $size3;
+			}
+
+			&__no_reviews-span {
+				text-align: center;
+				font-size: $size4;
+			}
 		}
 
-		.film__actors,
-		.film__similar {
-			padding: 0;
-			align-items: center;
+		&__similar {
+			padding: 0 2rem;
+
+			&-span {
+				text-align: center;
+				font-size: $size3;
+			}
+
+			&__no_similar-span {
+				text-align: center;
+				font-size: $size4;
+			}
 		}
 	}
 }
