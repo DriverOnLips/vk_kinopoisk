@@ -59,7 +59,7 @@ const List: React.FC<ListProps> = ({ filmList }) => {
 		const remInPixels = rootFontSize * 5;
 		const screenHeight = window.innerHeight;
 
-		return screenHeight - remInPixels - 250;
+		return screenHeight - remInPixels - 220;
 	};
 
 	return (

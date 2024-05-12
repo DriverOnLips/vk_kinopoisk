@@ -98,6 +98,7 @@ const FilmsList: React.FC = () => {
 								<>
 									<List filmList={films} />
 									<Paginator
+										className={styles.film_list__gallery__pagination}
 										page={page}
 										pages={pages}
 										onClick={onPaginationClick}

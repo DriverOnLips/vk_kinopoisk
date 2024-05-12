@@ -37,6 +37,11 @@
 			text-align: center;
 			font-size: $size4;
 		}
+
+		&__pagination {
+			position: absolute;
+			bottom: 20px;
+		}
 	}
 }
 
