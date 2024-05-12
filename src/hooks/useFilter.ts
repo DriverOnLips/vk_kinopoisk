@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { SetFilmAge, SetFilmCountry } from 'stores/FilterStore/FilterStore';
-import { CountryType } from 'types/CountryType';
 import { RootState } from 'types/StoreTypes';
 
 export const useFilter = () => {
@@ -14,18 +13,8 @@ export const useFilter = () => {
 		dispatch(SetFilmAge(age));
 	};
 
-	const setFilmCountry = (countries: CountryType[]) => {
-		dispatch(SetFilmCountry(countries));
-	};
-
-	const setExactCountry = (countryName: string) => {
-		const updatedCountries = filmCountry.map((ctr: CountryType) => {
-			return {
-				...ctr,
-				state: ctr.name === countryName ? true : false,
-			};
-		});
-		dispatch(SetFilmCountry(updatedCountries));
+	const setFilmCountry = (countryName: string) => {
+		dispatch(SetFilmCountry(countryName));
 	};
 
 	return {
@@ -33,6 +22,5 @@ export const useFilter = () => {
 		filmCountry,
 		setFilmAge,
 		setFilmCountry,
-		setExactCountry,
 	};
 };

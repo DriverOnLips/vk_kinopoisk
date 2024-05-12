@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Container, Row, Button } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Loader } from 'components/Loader/Loader';
 import MultiDropdown from 'components/MultiDropdown/MultiDropdown';
 import Paginator from 'components/Pagination/Pagination';
-import Slider from 'components/Slider/Slider';
 import Text from 'components/Text/Text';
 import { useFilmList } from 'hooks/useFilmList';
 import { useFilter } from 'hooks/useFilter';
 import { usePage } from 'hooks/usePage';
 import { useQueryParams } from 'hooks/useQueryParams';
+import { AgeType } from 'types/AgeType';
 import { CountryType } from 'types/CountryType';
 import { Meta } from 'utils/meta';
 import List from './components/List/List';
@@ -19,7 +19,7 @@ const FilmsList: React.FC = () => {
 	const [loaded, setLoaded] = useState<boolean>(false);
 	const { meta, films, setFilms, deleteFilms } = useFilmList();
 	const { page, pages, setPage } = usePage();
-	const { filmAge, filmCountry, setFilmAge, setExactCountry } = useFilter();
+	const { filmAge, filmCountry, setFilmAge, setFilmCountry } = useFilter();
 	const { params, getParam } = useQueryParams();
 
 	const navigate = useNavigate();
@@ -28,20 +28,21 @@ const FilmsList: React.FC = () => {
 	const setSearch = useCallback(
 		(param: string, value: number | string) => {
 			const newSearchParams = new URLSearchParams(location.search);
-			if (param !== 'page') {
+			if (param === 'age' || param === 'country') {
 				newSearchParams.set(param, String(value));
 				newSearchParams.set('page', '1');
 				navigate(`?${newSearchParams.toString()}`, { replace: true });
 
 				return;
 			}
+
 			newSearchParams.set(param, String(value));
 			navigate(`?${newSearchParams.toString()}`, { replace: true });
 		},
 		[location.search, navigate],
 	);
 
-	const onMultidropdownSelect = useCallback(
+	const onCountrySelect = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>, country: CountryType) => {
 			e.preventDefault();
 
@@ -50,13 +51,13 @@ const FilmsList: React.FC = () => {
 		[setSearch],
 	);
 
-	const onSliderChange = useCallback(
-		(newAge: number) => {
-			if (newAge !== filmAge) {
-				setSearch('age', newAge);
-			}
+	const onAgeSelect = useCallback(
+		(e: React.MouseEvent<HTMLDivElement>, age: AgeType) => {
+			e.preventDefault();
+
+			setSearch('age', age.age);
 		},
-		[filmAge, setSearch],
+		[setSearch],
 	);
 
 	const onPaginationClick = useCallback(
@@ -94,7 +95,7 @@ const FilmsList: React.FC = () => {
 
 		const countryFromUrl = getParam('country');
 		if (countryFromUrl && typeof countryFromUrl === 'string') {
-			setExactCountry(countryFromUrl);
+			setFilmCountry(countryFromUrl);
 		}
 	}, [params]);
 
@@ -110,16 +111,16 @@ const FilmsList: React.FC = () => {
 			</Text>
 
 			<Container className={styles.film_list__selectors}>
-				<Slider
-					item={filmAge}
-					onSliderChange={onSliderChange}
+				<MultiDropdown
+					title='Возрастное ограничение'
+					items={filmAge}
+					onClick={onAgeSelect}
 				/>
 				<MultiDropdown
 					title='Страна'
 					items={filmCountry}
-					onClick={onMultidropdownSelect}
+					onClick={onCountrySelect}
 				/>
-				<Button>Найти</Button>
 			</Container>
 
 			<Container className={styles.film_list__gallery}>

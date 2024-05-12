@@ -4,6 +4,7 @@ import {
 	SetMeta,
 	DeleteFilms,
 } from 'stores/FilmStores/FilmListStore';
+import { AgeType } from 'types/AgeType';
 import { CountryType } from 'types/CountryType';
 import {
 	FilmFromListApi,
@@ -28,7 +29,7 @@ export const useFilmList = () => {
 
 	const setFilms = async (
 		page: number,
-		filmAge: number,
+		filmAge: AgeType[],
 		filmCountry: CountryType[],
 	) => {
 		if (meta === Meta.loading) {
@@ -37,13 +38,22 @@ export const useFilmList = () => {
 
 		dispatch(SetMeta(Meta.loading));
 
-		const ageRating =
-			filmAge === 0 ? undefined : filmAge !== 18 ? `0-${filmAge}` : '18';
+		// const ageRating =
+		// 	filmAge === 0 ? undefined : filmAge !== 18 ? `0-${filmAge}` : '18';
+
+		const age = filmAge.find((a) => a.state === true);
+		const ageParam =
+			!age || age.age === 0
+				? undefined
+				: age.age === 18
+					? '18'
+					: `${age.age}-18`;
+
 		const country = filmCountry.find((c) => c.state === true);
 		const countryName =
 			!country || country.name === 'Все страны' ? undefined : country.name;
 
-		const response = await api.getFilmsForList(page, ageRating, countryName);
+		const response = await api.getFilmsForList(page, ageParam, countryName);
 
 		if (response instanceof Error) {
 			log(response);

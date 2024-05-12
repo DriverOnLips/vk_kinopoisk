@@ -1,18 +1,17 @@
 import React from 'react';
 import { Dropdown, DropdownButton, Form } from 'react-bootstrap';
-import { CountryType } from 'types/CountryType';
 import './MultiDropdown.scss';
 
-type MultiDropdownProps = {
+type MultiDropdownProps<T> = {
 	title: string;
-	items: CountryType[];
+	items: T[];
 	onClick: (
 		event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-		item: CountryType,
+		item: T,
 	) => void;
 };
 
-const MultiDropdown: React.FC<MultiDropdownProps> = ({
+const MultiDropdown: React.FC<MultiDropdownProps<any>> = ({
 	title,
 	items,
 	onClick,
@@ -24,7 +23,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
 			data-bs-theme='dark'
 			variant='secondary'
 		>
-			{items.map((item: CountryType, index: number) => (
+			{items.map((item: any, index: number) => (
 				<Dropdown.Item
 					className='multidropdown_item'
 					key={index}
@@ -35,7 +34,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
 					<Form.Check
 						className='multidropdown_item-check'
 						type='radio'
-						label={item.name}
+						label={item.name || `${item.age} +`}
 						checked={item.state}
 						name='multidropdownSelection'
 						disabled

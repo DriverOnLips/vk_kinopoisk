@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AgeType } from 'types/AgeType';
 import { CountryType } from 'types/CountryType';
-import { filmCountrySet } from './config';
+import { filmAgeSet, filmCountrySet } from './config';
 
 export type FilterState = {
-	filmAge: number;
+	filmAge: AgeType[];
 	filmCountry: CountryType[];
 };
 
 const initialState: FilterState = {
-	filmAge: 0,
+	filmAge: filmAgeSet,
 	filmCountry: filmCountrySet,
 };
 
@@ -17,10 +18,24 @@ export const FilterStoreSlice = createSlice({
 	initialState,
 	reducers: {
 		SetFilmAge: (state, action: PayloadAction<number>) => {
-			state.filmAge = action.payload;
+			const updatedAges = state.filmAge.map((age: AgeType) => {
+				return {
+					...age,
+					state: age.age === action.payload ? true : false,
+				};
+			});
+
+			state.filmAge = updatedAges;
 		},
-		SetFilmCountry: (state, action: PayloadAction<CountryType[]>) => {
-			state.filmCountry = action.payload;
+		SetFilmCountry: (state, action: PayloadAction<string>) => {
+			const updatedCountries = state.filmCountry.map((ctr: CountryType) => {
+				return {
+					...ctr,
+					state: ctr.name === action.payload ? true : false,
+				};
+			});
+
+			state.filmCountry = updatedCountries;
 		},
 	},
 });
