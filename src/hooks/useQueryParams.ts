@@ -19,5 +19,5 @@ export const useQueryParams = () => {
 		return params[key];
 	};
 
-	return { getParam };
+	return { params, getParam };
 };

@@ -18,10 +18,21 @@ export const useFilter = () => {
 		dispatch(SetFilmCountry(countries));
 	};
 
+	const setExactCountry = (countryName: string) => {
+		const updatedCountries = filmCountry.map((ctr: CountryType) => {
+			return {
+				...ctr,
+				state: ctr.name === countryName ? true : false,
+			};
+		});
+		dispatch(SetFilmCountry(updatedCountries));
+	};
+
 	return {
 		filmAge,
 		filmCountry,
 		setFilmAge,
 		setFilmCountry,
+		setExactCountry,
 	};
 };
