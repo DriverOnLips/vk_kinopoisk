@@ -1,6 +1,6 @@
-import cn from 'classnames';
 import React, { useCallback, useEffect } from 'react';
 import { Container, Row, Button } from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Loader } from 'components/Loader/Loader';
 import MultiDropdown from 'components/MultiDropdown/MultiDropdown';
 import Paginator from 'components/Pagination/Pagination';
@@ -9,6 +9,7 @@ import Text from 'components/Text/Text';
 import { useFilmList } from 'hooks/useFilmList';
 import { useFilter } from 'hooks/useFilter';
 import { usePage } from 'hooks/usePage';
+import { useQueryParams } from 'hooks/useQueryParams';
 import { CountryType } from 'types/CountryType';
 import { Meta } from 'utils/meta';
 import List from './components/List/List';
@@ -18,6 +19,19 @@ const FilmsList: React.FC = () => {
 	const { meta, films, setFilms, deleteFilms } = useFilmList();
 	const { page, pages, setPage } = usePage();
 	const { filmAge, filmCountry, setFilmAge, setFilmCountry } = useFilter();
+	const { getParam } = useQueryParams();
+
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	const setSearch = useCallback(
+		(param: string, value: number | string) => {
+			const newSearchParams = new URLSearchParams(location.search);
+			newSearchParams.set(param, String(value));
+			navigate(`?${newSearchParams.toString()}`, { replace: true });
+		},
+		[location.search, navigate],
+	);
 
 	const onMultidropdownSelect = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>, country: CountryType) => {
@@ -36,22 +50,27 @@ const FilmsList: React.FC = () => {
 			});
 
 			setFilmCountry(updatedCountries);
+			setSearch('country', country.name);
 		},
-		[filmCountry, setFilmCountry],
+		[filmCountry, setFilmCountry, setSearch],
 	);
 
 	const onSliderChange = useCallback(
 		(newAge: number) => {
 			if (newAge !== filmAge) {
 				setFilmAge(newAge);
+				setSearch('age', newAge);
 			}
 		},
 		[filmAge, setFilmAge],
 	);
 
 	const onPaginationClick = useCallback(
-		(page: number) => () => setPage(page),
-		[setPage],
+		(page: number) => () => {
+			setPage(page);
+			setSearch('page', page);
+		},
+		[setPage, navigate, location.search],
 	);
 
 	const loadFilms = async () => {

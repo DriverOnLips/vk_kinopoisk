@@ -19,15 +19,15 @@ export class Api {
 
 		// this.token = '65M503X-DGEMWBE-JSNXV9Y-384KZJR';
 		// this.token = 'BMQ0PHY-0SCM5Q8-JPZJ1P3-PV28JKJ';
-		this.token = 'FBZJA82-T40M4XZ-G2W29WD-V4DE583';
+		// this.token = 'FBZJA82-T40M4XZ-G2W29WD-V4DE583';
 		// this.token = '5M9EE5M-6AB4RSG-KKM19X2-HSJAX8Q';
 		// this.token = 'T2XXF72-5AXMJ6Y-N8AX3BT-ACBEVAH';
-		// this.token = 'ZX8ZGSZ-PYTM11R-NYKBY15-J29FXHB';
+		this.token = 'ZX8ZGSZ-PYTM11R-NYKBY15-J29FXHB';
 		// this.token = 'R87RDPM-TD7M6QG-QHAPQD3-JP4QTNR';
 
 		this.axiosInstance = axios.create({
 			baseURL: 'https://api.kinopoisk.dev/v1.4/',
-			timeout: 1000,
+			timeout: 500,
 		});
 
 		axiosRetry(this.axiosInstance, {
@@ -55,7 +55,7 @@ export class Api {
 					const originalRequest = error.config;
 					originalRequest.cancelToken = axios.CancelToken.source().token;
 					return new Promise((resolve) => {
-						setTimeout(() => resolve(this.axiosInstance(originalRequest)), 250);
+						setTimeout(() => resolve(this.axiosInstance(originalRequest)), 100);
 					});
 				}
 
