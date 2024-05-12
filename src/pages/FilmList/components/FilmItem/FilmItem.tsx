@@ -40,6 +40,9 @@ const FilmItem: React.FC<{
 				</Card.Title>
 				<div className={styles['film_item-card__body__details']}>
 					<Card.Text className={styles['film_item-card__body__details-text']}>
+						{film.description}
+					</Card.Text>
+					<Card.Text className={styles['film_item-card__body__details-text']}>
 						Рейтинг: {Math.round(film.rating * 100) / 100}
 					</Card.Text>
 					<Card.Text

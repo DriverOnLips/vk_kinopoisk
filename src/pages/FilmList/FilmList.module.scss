@@ -3,149 +3,53 @@
 .film_list {
 	margin-top: 56px;
 
-	&_span {
+	&__intro {
+		width: 100%;
+		height: 220px;
+		object-fit: cover;
+		max-height: 220px; /* Установите max-height равным высоте элемента */
+		transition: max-height 0.5s ease-out; /* Анимация изменения max-height */
+	}
+
+	&-span {
 		display: flex;
 		justify-content: center;
-		font-size: $size2;
-		padding: 0 2rem;
+		padding: 1rem;
 	}
 
 	&__selectors {
 		display: flex;
 		justify-content: center;
 		gap: 2vw;
-		padding: 0 1rem;
+		padding: 1rem 1rem 2rem 1rem;
 	}
 
-	&_gallery {
-		&-col,
-		&-col_placeholder {
-			display: flex;
-			flex: 0 0 auto;
-			width: 50%;
-			justify-content: center;
-			box-sizing: border-box;
+	&__gallery {
+		max-width: 100%;
+		display: flex;
+		justify-content: center;
+
+		&__grid {
+			margin-left: 20px;
 		}
 
 		&__no_content-span {
 			text-align: center;
 			font-size: $size4;
 		}
-	}
 
-	iframe {
-		pointer-events: none;
-	}
-}
-
-@media screen and (max-width: 1400px) {
-	#films_list {
-		.title {
-			font-size: $size1;
-		}
-
-		.description {
-			font-size: $size3;
+		&__pagination {
+			position: absolute;
+			bottom: 20px;
 		}
 	}
 }
 
-@media screen and (max-width: 800px) {
-	#films_list {
-		.title {
-			font-size: $size2;
-		}
-
-		.description {
-			top: 250px;
-			font-size: $size4;
-		}
-
-		#best_films-span {
-			font-size: $size3;
-		}
-	}
-}
-
-@media screen and (max-width: 650px) {
-	#films_list {
-		.title {
-			top: 80px;
-			font-size: $size3;
-		}
-
-		.description {
-			top: 210px;
-			font-size: $size5;
-		}
-	}
-}
-
-@media screen and (max-width: 600px) {
-	#films_list {
-		#best_films-span {
-			font-size: $size4;
-		}
-
-		.films_gallery-container {
-			.films_gallery-col,
-			.films_gallery-col-placeholder {
-				width: 100%;
-			}
-		}
-
-		.selectors {
-			justify-content: center;
+@media (max-width: 450px) {
+	.film_list {
+		&__selectors {
 			flex-direction: column;
-		}
-
-		.films_gallery-container {
-			.films_gallery-container__no_content-span {
-				font-size: $size5;
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 460px) {
-	#films_list {
-		.title {
-			font-size: $size4;
-		}
-
-		.description {
-			top: 180px;
-			font-size: $size6;
-		}
-
-		#best_films-span {
-			font-size: $size5;
-		}
-	}
-}
-
-@media screen and (max-width: 370px) {
-	#films_list {
-		.title {
-			left: 15px;
-			font-size: $size5;
-		}
-
-		.description {
-			top: 150px;
-			left: 15px;
-			width: 60%;
-			font-size: $size7;
-		}
-
-		.selectors_1,
-		.selectors_2 {
-			justify-content: center;
-			flex-direction: column;
-		}
-
-		.selectors {
-			padding: 0 2rem;
+			align-items: center;
 		}
 	}
 }

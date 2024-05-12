@@ -24,6 +24,7 @@ export type FilmReviewResponse = {
 
 export const normalizeFilmReview = (from: FilmReviewApi): FilmReviewModel => ({
 	...from,
+	title: from.title !== '' ? from.title : 'Отзыв',
 	username: from.author,
 	date: from.date
 		.slice(0, from.date.indexOf('T'))

@@ -4,16 +4,22 @@ import Pagination from 'react-bootstrap/Pagination';
 import styles from './Pagination.module.scss';
 
 type PaginationProps = {
+	className?: string;
 	page: number;
 	pages: number;
 	onClick: (page: number) => () => void;
 };
 
-const Paginator: React.FC<PaginationProps> = ({ page, pages, onClick }) => {
+const Paginator: React.FC<PaginationProps> = ({
+	className,
+	page,
+	pages,
+	onClick,
+}) => {
 	return (
 		<Pagination
 			id='pagination'
-			className={cn(styles.pagination, 'pt-5', 'pb-3')}
+			className={cn(styles.pagination, !!className && className)}
 			data-bs-theme='dark'
 		>
 			<Pagination.Prev

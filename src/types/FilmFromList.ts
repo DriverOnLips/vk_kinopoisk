@@ -13,6 +13,7 @@ export type FilmFromListApi = {
 	id: number;
 	name: string;
 	year: number;
+	description: string;
 	rating: FilmFromListRating;
 	poster: FilmPoster;
 	genres: FilmFromListGenre[];
@@ -28,6 +29,7 @@ export type FilmFromListModel = {
 	id: number;
 	name: string;
 	year: number;
+	description: string;
 	rating: number;
 	photo: string;
 	genre: string;

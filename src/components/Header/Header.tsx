@@ -1,22 +1,17 @@
 import React, { useCallback, useRef } from 'react';
 import { Navbar, Container, Offcanvas } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Search from './components/Search/Search';
 
 function Header() {
 	const navigate = useNavigate();
 	const closeButtonRef = useRef<HTMLDivElement>(null);
-	const location = useLocation();
 
 	const onLogoClick = useCallback(() => {
 		closeButtonRef?.current?.getElementsByTagName('button')[0].click();
 
-		if (location.pathname === '/') {
-			window.scrollTo(0, 0);
-		} else {
-			navigate('/');
-		}
-	}, [navigate, location.pathname]);
+		navigate('/');
+	}, [navigate]);
 
 	return (
 		<>

@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axiosRetry, { exponentialDelay } from 'axios-retry';
 import { FilmApi } from 'types/Film';
 import { FilmFromListResponse } from 'types/FilmFromList';
 import { FilmFromSearchResponse } from 'types/FilmFromSearch';
@@ -6,8 +7,7 @@ import { FilmReviewResponse } from 'types/FilmReview';
 
 export class Api {
 	private static instance: Api;
-	private config!: { name: string; url: string }[];
-	private domain!: string;
+	private axiosInstance!: AxiosInstance;
 	private token: string | undefined;
 
 	constructor() {
@@ -17,44 +17,74 @@ export class Api {
 
 		Api.instance = this;
 
-		this.domain = 'https://api.kinopoisk.dev/v1.4/';
-
 		// this.token = '65M503X-DGEMWBE-JSNXV9Y-384KZJR';
 		// this.token = 'BMQ0PHY-0SCM5Q8-JPZJ1P3-PV28JKJ';
-		this.token = 'FBZJA82-T40M4XZ-G2W29WD-V4DE583';
+		// this.token = 'FBZJA82-T40M4XZ-G2W29WD-V4DE583';
 		// this.token = '5M9EE5M-6AB4RSG-KKM19X2-HSJAX8Q';
 		// this.token = 'T2XXF72-5AXMJ6Y-N8AX3BT-ACBEVAH';
 		// this.token = 'ZX8ZGSZ-PYTM11R-NYKBY15-J29FXHB';
 		// this.token = 'R87RDPM-TD7M6QG-QHAPQD3-JP4QTNR';
+		// this.token = 'S16XGSJ-47W4Q74-KB17YZW-KNXXDX1';
+		this.token = 'M8N0857-CA1M35T-MN9WZFD-Q2V2F7T';
 
-		this.config = [
-			{ name: 'getFilmsForList', url: `${this.domain}movie?` },
-			{ name: 'getFilmInfo', url: `${this.domain}movie/` },
-			{ name: 'getFilmSeasons', url: `${this.domain}season?` },
-			{ name: 'getFilmReviews', url: `${this.domain}review?` },
-			{ name: 'getFilmPosters', url: `${this.domain}image?` },
-			{ name: 'searchFilm', url: `${this.domain}movie/search?` },
-			{ name: 'getRandomFilm', url: `${this.domain}movie/random?` },
-		];
+		this.axiosInstance = axios.create({
+			baseURL: 'https://api.kinopoisk.dev/v1.4/',
+			timeout: 500,
+		});
+
+		axiosRetry(this.axiosInstance, {
+			retries: 3,
+			retryDelay: exponentialDelay,
+		});
+
+		this.axiosInstance.interceptors.request.use((config) => {
+			// const requestId = Math.random().toString(36).substring(7);
+			config.params = {
+				...config.params,
+				// requestId: requestId,
+			};
+			return config;
+		});
+
+		this.axiosInstance.interceptors.response.use(
+			(response) => response,
+			(error) => {
+				if (axios.isCancel(error)) {
+					return Promise.reject(error);
+				}
+
+				if (error.code === 'ECONNABORTED' || error.response?.status === 429) {
+					const originalRequest = error.config;
+					originalRequest.cancelToken = axios.CancelToken.source().token;
+					return new Promise((resolve) => {
+						setTimeout(() => resolve(this.axiosInstance(originalRequest)), 100);
+					});
+				}
+
+				return Promise.reject(error);
+			},
+		);
+	}
+
+	private async makeRequest<T>(config: AxiosRequestConfig): Promise<T | Error> {
+		try {
+			const response = await this.axiosInstance.request<T>(config);
+			return response.data;
+		} catch (error) {
+			return new Error(error instanceof Error ? error.message : String(error));
+		}
 	}
 
 	getFilmsForList = async (
 		page: number,
 		filmsAge?: string,
 		countryName?: string,
-	): Promise<FilmFromListResponse> => {
-		const configItem = this.config.find(
-			(item) => item.name === 'getFilmsForList',
-		);
-
-		if (!configItem) {
-			throw new Error('Не найдена конфигурация для getFilmsForList');
-		}
-
+	): Promise<FilmFromListResponse | Error> => {
 		const selectFields: string[] = [
 			'id',
 			'name',
 			'rating',
+			'description',
 			'poster',
 			'year',
 			'genres',
@@ -82,53 +112,33 @@ export class Api {
 			...(countryName && { 'countries.name': countryName }),
 		};
 
-		return axios
-			.get(`${configItem.url}${queryString}`, {
-				params: params,
-				headers: {
-					accept: 'application/json',
-					'X-API-KEY': this.token,
-				},
-			})
-			.then((res) => {
-				return res?.data;
-			})
-			.catch((error) => {
-				return error?.response?.data;
-			});
+		const config = {
+			method: 'GET',
+			url: `movie?${queryString}`,
+			params: params,
+			headers: {
+				accept: 'application/json',
+				'X-API-KEY': this.token,
+			},
+		};
+
+		return this.makeRequest<FilmFromListResponse>(config);
 	};
 
-	getFilmInfo = async (id: number): Promise<FilmApi> => {
-		const configItem = this.config.find((item) => item.name === 'getFilmInfo');
+	getFilmInfo = async (id: number): Promise<FilmApi | Error> => {
+		const config = {
+			method: 'GET',
+			url: `movie/${id}`,
+			headers: {
+				accept: 'application/json',
+				'X-API-KEY': this.token,
+			},
+		};
 
-		if (!configItem) {
-			throw new Error('Не найдена конфигурация для getFilmInfo');
-		}
-
-		return axios
-			.get(`${configItem.url}${id}`, {
-				headers: {
-					accept: 'application/json',
-					'X-API-KEY': this.token,
-				},
-			})
-			.then((res) => {
-				return res?.data;
-			})
-			.catch((error) => {
-				return error?.response?.data;
-			});
+		return this.makeRequest<FilmApi>(config);
 	};
 
-	getFilmReviews = async (id: number): Promise<FilmReviewResponse> => {
-		const configItem = this.config.find(
-			(item) => item.name === 'getFilmReviews',
-		);
-
-		if (!configItem) {
-			throw new Error('Не найдена конфигурация для getFilmReviews');
-		}
-
+	getFilmReviews = async (id: number): Promise<FilmReviewResponse | Error> => {
 		const selectFields: string[] = [
 			'id',
 			'title',
@@ -148,48 +158,38 @@ export class Api {
 			movieId: id,
 		};
 
-		return axios
-			.get(`${configItem.url}${queryString}`, {
-				params: params,
-				headers: {
-					accept: 'application/json',
-					'X-API-KEY': this.token,
-				},
-			})
-			.then((res) => {
-				return res?.data;
-			})
-			.catch((error) => {
-				return error?.response?.data;
-			});
+		const config = {
+			method: 'GET',
+			url: `review?${queryString}`,
+			params: params,
+			headers: {
+				accept: 'application/json',
+				'X-API-KEY': this.token,
+			},
+		};
+
+		return this.makeRequest<FilmReviewResponse>(config);
 	};
 
-	searchFilm = async (name: string): Promise<FilmFromSearchResponse> => {
-		const configItem = this.config.find((item) => item.name === 'searchFilm');
-
-		if (!configItem) {
-			throw new Error('Не найдена конфигурация для searchFilm');
-		}
-
+	searchFilm = async (
+		name: string,
+	): Promise<FilmFromSearchResponse | Error> => {
 		const params = {
 			page: 1,
-			limit: 7,
+			limit: 10,
 			query: name,
 		};
 
-		return axios
-			.get(`${configItem.url}`, {
-				headers: {
-					accept: 'application/json',
-					'X-API-KEY': this.token,
-				},
-				params: params,
-			})
-			.then((res) => {
-				return res?.data;
-			})
-			.catch((error) => {
-				return error?.response?.data;
-			});
+		const config = {
+			method: 'GET',
+			url: 'movie/search',
+			params: params,
+			headers: {
+				accept: 'application/json',
+				'X-API-KEY': this.token,
+			},
+		};
+
+		return this.makeRequest<FilmFromSearchResponse>(config);
 	};
 }

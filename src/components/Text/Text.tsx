@@ -8,7 +8,7 @@ type TextProps = {
 	className?: string;
 	size?: 's0' | 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7';
 	text_align?: 'center' | 'start' | 'end';
-	weight?: 'medium' | 'bold';
+	weight?: 'light' | 'medium' | 'bold';
 	color?: 'primary' | 'secondary' | 'main';
 	display?: 'flex';
 	gap?: string;

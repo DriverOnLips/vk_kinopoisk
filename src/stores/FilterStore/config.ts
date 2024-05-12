@@ -1,3 +1,4 @@
+import { AgeType } from 'types/AgeType';
 import { CountryType } from 'types/CountryType';
 
 export const filmCountrySet: CountryType[] = [
@@ -13,4 +14,11 @@ export const filmCountrySet: CountryType[] = [
 	{ name: 'Китай', state: false },
 	{ name: 'Индия', state: false },
 	{ name: 'Южная Корея', state: false },
+];
+
+export const filmAgeSet: AgeType[] = [
+	{ age: 0, state: true },
+	{ age: 12, state: false },
+	{ age: 16, state: false },
+	{ age: 18, state: false },
 ];

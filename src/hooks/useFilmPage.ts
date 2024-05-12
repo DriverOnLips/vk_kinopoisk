@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { SetFilm, DeleteFilm, SetMeta } from 'stores/FilmPageStore';
+import { SetFilm, DeleteFilm, SetMeta } from 'stores/FilmStores/FilmPageStore';
 import { FilmModel, normalizeFilm } from 'types/Film';
 import { FilmReviewApi, normalizeFilmReview } from 'types/FilmReview';
 import { RootState } from 'types/StoreTypes';
 import { Api } from 'utils/api';
+import { log } from 'utils/log';
 import { Meta } from 'utils/meta';
 
 export const useFilmPage = () => {
@@ -22,15 +23,37 @@ export const useFilmPage = () => {
 
 		const response = await api.getFilmInfo(id);
 
-		const filmFromResponse: FilmModel = normalizeFilm(response);
+		if (response instanceof Error) {
+			log(response);
+			dispatch(SetMeta(Meta.error));
 
-		const reviews = await api.getFilmReviews(id);
-		filmFromResponse.reviews = reviews?.docs?.map((review: FilmReviewApi) =>
-			normalizeFilmReview(review),
-		);
+			return;
+		}
 
-		dispatch(SetFilm(filmFromResponse));
-		dispatch(SetMeta(Meta.success));
+		try {
+			const filmFromResponse: FilmModel = normalizeFilm(response);
+
+			const reviews = await api.getFilmReviews(id);
+
+			if (reviews instanceof Error) {
+				log(reviews);
+				dispatch(SetMeta(Meta.error));
+
+				return;
+			}
+
+			filmFromResponse.reviews = reviews?.docs?.map((review: FilmReviewApi) =>
+				normalizeFilmReview(review),
+			);
+
+			dispatch(SetFilm(filmFromResponse));
+			dispatch(SetMeta(Meta.success));
+		} catch (error) {
+			log(error);
+
+			dispatch(DeleteFilm());
+			dispatch(SetMeta(Meta.error));
+		}
 	};
 
 	const deleteFilm = () => {

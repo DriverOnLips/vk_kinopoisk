@@ -6,6 +6,7 @@ import ico from 'assets/ico/logo.ico';
 import Header from 'components/Header/Header';
 import FilmList from 'pages/FilmList/FilmList';
 import FilmPage from 'pages/FilmPage/FilmPage';
+import { MainPageRedirect } from 'pages/MainPageRedirect/MainPageRedirect';
 import 'styles/index.scss';
 
 const App = () => {
@@ -32,10 +33,10 @@ const App = () => {
 						path='/film/:id'
 						element={<FilmPage />}
 					/>
-					{/* <Route
-							path='*'
-							element={<NotFound />}
-						/> */}
+					<Route
+						path='*'
+						element={<MainPageRedirect />}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</HelmetProvider>

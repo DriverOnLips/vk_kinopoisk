@@ -24,9 +24,11 @@ const FilmPage: React.FC = () => {
 
 	useEffect(() => {
 		loadFilm();
+		document.body.style.background = 'none';
 
 		return () => {
 			deleteFilm();
+			document.body.style.background = '';
 		};
 	}, [id]);
 
@@ -39,7 +41,7 @@ const FilmPage: React.FC = () => {
 				viewBox='0 0 360 336'
 				fill='none'
 				xmlns='http://www.w3.org/2000/svg'
-				onClick={() => navigate('/')}
+				onClick={() => navigate(-1)}
 			>
 				<path
 					d='M168 312L24 168L168 24M44 168H336'
@@ -144,52 +146,36 @@ const FilmPage: React.FC = () => {
 						</Col>
 					</Row>
 					<Row className={styles.film_page__film_info__reviews}>
-						<span
-							className={cn(
-								styles['film_page__film_info__reviews-span'],
-								'mb-2',
-							)}
-						>
-							Отзывы:
-						</span>
-						{film!.reviews?.length > 0 ? (
-							film?.reviews && (
+						{film!.reviews?.length > 0 && (
+							<>
+								<span
+									className={cn(
+										styles['film_page__film_info__reviews-span'],
+										'mb-2',
+									)}
+								>
+									Отзывы:
+								</span>
 								<Gallery
-									items={film.reviews}
+									items={film!.reviews}
 									ItemElement={ReviewItem}
 								/>
-							)
-						) : (
-							<span
-								className={cn(
-									styles['film_page__film_info__reviews__no_reviews-span'],
-									'mb-2',
-								)}
-							>
-								Отзывов пока нет
-							</span>
+							</>
 						)}
 					</Row>
 					<Row className={cn(styles.film_page__film_info__similar, 'my-3')}>
-						<span
-							className={cn(
-								styles['film_page__film_info__similar-span'],
-								'mb-2',
-							)}
-						>
-							Вам может понравиться:
-						</span>
-						{film!.similarFilms?.length > 0 ? (
-							<SimilarFilms movies={film!.similarFilms} />
-						) : (
-							<span
-								className={cn(
-									styles['film_page__film_info__similar__no_similar-span'],
-									'mb-2',
-								)}
-							>
-								Похожих фильмов не нашлось
-							</span>
+						{film!.similarFilms?.length > 0 && (
+							<>
+								<span
+									className={cn(
+										styles['film_page__film_info__similar-span'],
+										'mb-2',
+									)}
+								>
+									Вам может понравиться:
+								</span>
+								<SimilarFilms movies={film!.similarFilms} />
+							</>
 						)}
 					</Row>
 				</Container>
