@@ -1,7 +1,8 @@
 @import "styles/vars.scss";
 
 .film_item-card {
-	width: 35vw;
+	width: 28vw;
+	height: calc(100% - 100px);
 	cursor: pointer;
 
 	> iframe {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { CountryType } from 'types/CountryType';
-import styles from './MultiDropdown.module.scss';
+import './MultiDropdown.scss';
 
 type MultiDropdownProps = {
 	title: string;
@@ -19,21 +19,21 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
 }) => {
 	return (
 		<DropdownButton
-			className={styles.multidropdown}
+			className='multidropdown'
 			title={title}
 			data-bs-theme='dark'
 			variant='secondary'
 		>
 			{items.map((item: CountryType, index: number) => (
 				<Dropdown.Item
-					className={styles.multidropdown_item}
+					className='multidropdown_item'
 					key={index}
 					onClick={(e) =>
 						onClick(e as React.MouseEvent<HTMLDivElement, MouseEvent>, item)
 					}
 				>
 					<Form.Check
-						className={styles['multidropdown_item-check']}
+						className='multidropdown_item-check'
 						type='radio'
 						label={item.name}
 						checked={item.state}

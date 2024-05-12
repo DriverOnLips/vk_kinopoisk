@@ -1,0 +1,14 @@
+.dropdown_slider {
+	&__dates {
+		display: flex;
+		justify-content: center;
+	}
+
+	.dropdown-menu.show {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		gap: 5px;
+	}
+}

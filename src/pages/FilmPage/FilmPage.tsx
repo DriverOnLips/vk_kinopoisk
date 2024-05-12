@@ -24,9 +24,11 @@ const FilmPage: React.FC = () => {
 
 	useEffect(() => {
 		loadFilm();
+		document.body.style.background = 'none';
 
 		return () => {
 			deleteFilm();
+			document.body.style.background = '';
 		};
 	}, [id]);
 

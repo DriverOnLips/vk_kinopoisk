@@ -103,7 +103,7 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 
 	return (
 		<Form
-			className={cn(styles.header_searh, 'd-flex', 'flex-grow-1', 'px-3')}
+			className={cn(styles.header_searh, 'd-flex')}
 			ref={dropdownRef}
 		>
 			{(meta === Meta.success ||

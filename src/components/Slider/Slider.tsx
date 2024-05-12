@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
-import styles from './Slider.module.scss';
+import { DropdownButton } from 'react-bootstrap';
+import './Slider.scss';
 
 type SliderProps = {
 	item: number;
@@ -17,7 +18,12 @@ const Slider: React.FC<SliderProps> = ({ item, onSliderChange }) => {
 	);
 
 	return (
-		<>
+		<DropdownButton
+			data-bs-theme='dark'
+			variant='secondary'
+			title='Возрастное ограничение'
+			className='dropdown_slider'
+		>
 			<input
 				type='range'
 				min='0'
@@ -25,10 +31,10 @@ const Slider: React.FC<SliderProps> = ({ item, onSliderChange }) => {
 				value={item}
 				onChange={onChange}
 			/>
-			<div className={styles.dates}>
+			<div className='dropdown_slider__dates'>
 				<span>{item}+</span>
 			</div>
-		</>
+		</DropdownButton>
 	);
 };
 

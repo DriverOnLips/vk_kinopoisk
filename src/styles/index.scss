@@ -1,12 +1,16 @@
 @import "./vars.scss";
 
-html,
-#root {
+html {
 	height: calc(100vh - 56px);
 	width: 100%;
 	background-color: $background-color;
-	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-		url("assets/img/background.png");
+}
+
+body {
+	height: calc(100vh - 56px);
+	width: 100%;
+	background-color: $background-color;
+	background-image: url("assets/img/background.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;

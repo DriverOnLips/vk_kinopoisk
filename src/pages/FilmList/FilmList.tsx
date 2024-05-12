@@ -1,18 +1,17 @@
 import cn from 'classnames';
 import React, { useCallback, useEffect } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Button } from 'react-bootstrap';
+import { Loader } from 'components/Loader/Loader';
 import MultiDropdown from 'components/MultiDropdown/MultiDropdown';
 import Paginator from 'components/Pagination/Pagination';
 import Slider from 'components/Slider/Slider';
+import Text from 'components/Text/Text';
 import { useFilmList } from 'hooks/useFilmList';
 import { useFilter } from 'hooks/useFilter';
 import { usePage } from 'hooks/usePage';
 import { CountryType } from 'types/CountryType';
-import { FilmFromListModel } from 'types/FilmFromList';
 import { Meta } from 'utils/meta';
-import FilmItem from './components/FilmItem/FilmItem';
 import List from './components/List/List';
-import FilmItemPlaceholder from './components/Paceholder/FilmItemPlaceholder';
 import styles from './FilmList.module.scss';
 
 const FilmsList: React.FC = () => {
@@ -61,6 +60,7 @@ const FilmsList: React.FC = () => {
 
 	useEffect(() => {
 		loadFilms();
+
 		return () => {
 			deleteFilms();
 		};
@@ -68,19 +68,24 @@ const FilmsList: React.FC = () => {
 
 	return (
 		<div className={styles.film_list}>
-			<span className={cn(styles['film_list_span'], 'my-5')}>
+			<Text
+				className={styles['film_list-span']}
+				size='s3'
+				text_align='center'
+				weight='light'
+			>
 				Лучшие фильмы и сериалы
-			</span>
+			</Text>
 
 			<Container className={styles.film_list__selectors}>
+				<Slider
+					item={filmAge}
+					onSliderChange={onSliderChange}
+				/>
 				<MultiDropdown
 					title='Страна'
 					items={filmCountry}
 					onClick={onMultidropdownSelect}
-				/>
-				<Slider
-					item={filmAge}
-					onSliderChange={onSliderChange}
 				/>
 				<Button>Найти</Button>
 			</Container>
@@ -91,18 +96,7 @@ const FilmsList: React.FC = () => {
 						<>
 							{films?.length > 0 ? (
 								<>
-									<List
-										filmList={films}
-										increase={false}
-									/>
-									{/* {films.map((film: FilmFromListModel) => (
-										<Col
-											key={film.id}
-											className={cn(styles['film_list__gallery-col'], 'p-3')}
-										>
-											<FilmItem film={film} />
-										</Col>
-									))} */}
+									<List filmList={films} />
 									<Paginator
 										page={page}
 										pages={pages}
@@ -110,30 +104,18 @@ const FilmsList: React.FC = () => {
 									/>
 								</>
 							) : (
-								<span
-									className={cn(
-										styles['film_list__gallery__no_content-span'],
-										'mb-2',
-									)}
+								<Text
+									className={styles['film_list-span']}
+									size='s4'
+									text_align='center'
+									weight='light'
 								>
 									Нет фильмов или сериалов, удовлетворяющих параметрам поиска
-								</span>
+								</Text>
 							)}
 						</>
 					) : (
-						<>
-							{Array.from({ length: 4 }).map((_, i) => (
-								<Col
-									key={i}
-									className={cn(
-										styles['film_list__gallery-col_placeholder'],
-										'p-3',
-									)}
-								>
-									<FilmItemPlaceholder />
-								</Col>
-							))}
-						</>
+						<Loader />
 					)}
 				</Row>
 			</Container>

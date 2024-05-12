@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useCallback, CSSProperties, memo } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 import { FilmFromListModel } from 'types/FilmFromList';
+import styles from '../../FilmList.module.scss';
 import FilmItem from '../FilmItem/FilmItem';
 
 interface GridItemProps {
@@ -12,10 +13,9 @@ interface GridItemProps {
 
 type ListProps = {
 	filmList: FilmFromListModel[];
-	increase: boolean;
 };
 
-const List: React.FC<ListProps> = ({ filmList, increase }) => {
+const List: React.FC<ListProps> = ({ filmList }) => {
 	const getColumnCount = () => {
 		const screenWidth = window.innerWidth;
 		if (screenWidth < 650) {
@@ -59,14 +59,12 @@ const List: React.FC<ListProps> = ({ filmList, increase }) => {
 		const remInPixels = rootFontSize * 5;
 		const screenHeight = window.innerHeight;
 
-		return increase
-			? screenHeight - 215 - remInPixels
-			: screenHeight - 420 - remInPixels;
+		return screenHeight - remInPixels - 250;
 	};
 
 	return (
 		<Grid
-			// className={`${styles.recipe_list__container}`}
+			className={`${styles.film_list__gallery__grid}`}
 			columnCount={getColumnCount()}
 			columnWidth={() => {
 				const columnCount = getColumnCount();
@@ -75,7 +73,7 @@ const List: React.FC<ListProps> = ({ filmList, increase }) => {
 			height={setGridHeight()} // Высота списка
 			rowCount={Math.ceil(filmList.length / getColumnCount())}
 			rowHeight={setItemHeight} // Высота элемента
-			width={window.innerWidth - 4} // Ширина списка
+			width={window.innerWidth - 20} // Ширина списка
 			// style={{ overflowY: 'scroll', scrollbarWidth: 'none' }}
 		>
 			{({ columnIndex, rowIndex, style }: GridItemProps) => {
