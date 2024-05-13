@@ -106,7 +106,8 @@ const Search: React.FC<{ buttonRef: React.RefObject<HTMLDivElement> }> = ({
 			className={cn(styles.header_searh, 'd-flex')}
 			ref={dropdownRef}
 		>
-			{(meta === Meta.success ||
+			{(filmsToSuggest?.length > 0 ||
+				(meta === Meta.success && filmsFromSearch.length > 0) ||
 				(isSearchOpen && filmsSearchHistory?.length > 0)) && (
 				<Dropdown.Menu
 					show={isSearchOpen}

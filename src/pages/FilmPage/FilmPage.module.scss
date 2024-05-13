@@ -11,7 +11,7 @@
 		top: 56px;
 		left: 0;
 		margin: 1rem;
-		z-index: 1;
+		z-index: 2;
 		cursor: pointer;
 	}
 
@@ -41,7 +41,7 @@
 				align-items: center;
 
 				&__name {
-					margin: 2rem 0;
+					margin: 3rem 0 2rem 0;
 				}
 
 				&__country_genres {
@@ -94,15 +94,44 @@
 	}
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
 	.film_page {
 		&__film_info {
 			&__photo {
-				display: none;
+				position: absolute;
+				width: 100%;
+				opacity: 0.15;
+
+				&-img {
+					width: 100%;
+					height: calc(100vh - 56px);
+					mask-image: none;
+					object-fit: cover;
+				}
 			}
 
 			&-div {
 				width: 100%;
+				z-index: 1;
+			}
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.film_page {
+		&__film_info {
+			&-div {
+				&__about {
+					&__country_genres {
+						flex-direction: column;
+
+						.film_page__film_info-div__about__genres {
+							justify-content: start;
+							text-align: start !important;
+						}
+					}
+				}
 			}
 		}
 	}

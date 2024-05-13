@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Paginator from 'components/Pagination/Pagination';
+import Text from 'components/Text/Text';
 import { SimilarFilmsType } from 'types/Film';
 import styles from './SimilarFilms.module.scss';
 
@@ -40,9 +41,14 @@ const SimilarFilms: React.FC<{
 							/>
 						</Row>
 						<Row>
-							<span className={styles['similar_films__gallery__item-span']}>
+							<Text
+								size='s5'
+								weight='light'
+								text_align='center'
+								maxLines={2}
+							>
 								{movie.name}
-							</span>
+							</Text>
 						</Row>
 					</Col>
 				))}

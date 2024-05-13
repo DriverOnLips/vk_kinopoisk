@@ -2,7 +2,6 @@ import cn from 'classnames';
 import React, { useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import background from 'assets/img/background.png';
 import Gallery from 'components/Gallery/Gallery';
 import Text from 'components/Text/Text';
 import { useFilmPage } from 'hooks/useFilmPage';
@@ -25,27 +24,12 @@ const FilmPage: React.FC = () => {
 	};
 
 	useEffect(() => {
-		if (film?.photo) {
-			document.body.style.setProperty(
-				'--background-image',
-				`url(${film.photo})`,
-			);
-		}
-	}, [meta]);
-
-	useEffect(() => {
 		loadFilm();
-		document.body.style.setProperty(
-			'--background-image',
-			`url(${film?.photo})`,
-		);
+		document.body.style.background = 'none';
 
 		return () => {
 			deleteFilm();
-			document.body.style.setProperty(
-				'--background-image',
-				`url(${background})`,
-			);
+			document.body.style.background = '';
 		};
 	}, [id]);
 

@@ -4,6 +4,7 @@
 	&__gallery {
 		&__item {
 			cursor: pointer;
+			margin-bottom: 2rem;
 
 			&-img {
 				width: 100%;
@@ -20,41 +21,3 @@
 		}
 	}
 }
-
-// @media screen and (max-width: 1000px) {
-// 	.similar_movies {
-// 		.similar_movies__gallery {
-// 			.similar_movies__item {
-// 				.similar_movies__item-span {
-// 					font-size: $size6;
-// 					padding: 0 1rem;
-// 				}
-// 			}
-// 		}
-// 	}
-// }
-
-// @media screen and (max-width: 800px) {
-// 	.similar_movies {
-// 		.similar_movies__gallery {
-// 			.similar_movies__item {
-// 				.similar_movies__item-span {
-// 					font-size: $size7;
-// 				}
-// 			}
-// 		}
-// 	}
-// }
-
-// @media screen and (max-width: 650px) {
-// 	.similar_movies {
-// 		width: 60vw !important;
-// 		padding: 0;
-
-// 		.similar_movies__gallery {
-// 			.similar_movies__item {
-// 				width: 50%;
-// 			}
-// 		}
-// 	}
-// }
