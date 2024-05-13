@@ -1,12 +1,14 @@
 {
-	"name": "gastronaut",
+	"name": "kino",
 	"private": true,
 	"version": "0.0.0",
+	"homepage": "https://driveronlips.github.io/vk_kinopoisk",
 	"scripts": {
 		"dev": "cross-env NODE_ENV=development npx webpack serve --mode=development",
 		"build": "cross-env NODE_ENV=production npx webpack --mode=production",
 		"ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
 		"predeploy": "yarn run build",
+		"deploy": "gh-pages -d dist",
 		"lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
 		"lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix"
 	},
@@ -56,6 +58,7 @@
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.6",
 		"fork-ts-checker-webpack-plugin": "^9.0.2",
+		"gh-pages": "^6.1.1",
 		"html-webpack-plugin": "^5.6.0",
 		"mini-css-extract-plugin": "^2.7.6",
 		"postcss-loader": "^8.1.1",

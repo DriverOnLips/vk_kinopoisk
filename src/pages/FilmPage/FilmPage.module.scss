@@ -42,8 +42,6 @@
 
 				&__name {
 					margin: 2rem 0;
-					font-size: $size2;
-					text-align: center;
 				}
 
 				&__country_genres {
@@ -52,28 +50,18 @@
 
 					.film_page__film_info-div__about__country {
 						padding-right: 1rem;
-						font-size: $size4;
 					}
 
 					.film_page__film_info-div__about__genres {
 						display: flex;
 						justify-content: end;
-						font-size: $size4;
-						text-align: end;
 					}
-				}
-
-				&__description {
-					font-size: $size4;
 				}
 
 				&__rating_series {
+					display: flex;
 					width: 100%;
 					justify-content: space-between;
-
-					.film_page__film_info-div__about__rating {
-						font-size: $size4;
-					}
 				}
 			}
 		}
@@ -101,6 +89,20 @@
 			&__no_similar-span {
 				text-align: center;
 				font-size: $size4;
+			}
+		}
+	}
+}
+
+@media (max-width: 800px) {
+	.film_page {
+		&__film_info {
+			&__photo {
+				display: none;
+			}
+
+			&-div {
+				width: 100%;
 			}
 		}
 	}

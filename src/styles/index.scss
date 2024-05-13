@@ -1,5 +1,9 @@
 @import "./vars.scss";
 
+:root {
+	--background-image: url("assets/img/background.png");
+}
+
 html {
 	height: calc(100vh - 56px);
 	width: 100%;
@@ -10,14 +14,23 @@ body {
 	height: calc(100vh - 56px);
 	width: 100%;
 	background-color: $background-color;
-	background-image: url("assets/img/background.png");
+	background-image: var(--background-image);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
+	// mask-image: linear-gradient(
+	// 	to right,
+	// 	rgba(0, 0, 0, 0.5) 99%,
+	// 	rgba(0, 0, 0, 0.8) 99.5%,
+	// 	rgba(0, 0, 0, 1) 100%
+	// );
 }
 
 div {
 	color: $text-color;
+	mask-image:
+		black 0%,
+		transparent 100%;
 }
 
 button {

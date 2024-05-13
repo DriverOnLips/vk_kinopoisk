@@ -1,5 +1,6 @@
 import React, { memo, useCallback } from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
+import Text from 'components/Text/Text';
 import { FilmFromSearchModel } from 'types/FilmFromSearch';
 import styles from './SearchItem.module.scss';
 
@@ -40,10 +41,22 @@ const SearchItem: React.FC<SearchItemProps> = ({ film, onDropdownClick }) => {
 				>
 					<Row className={styles.search_item__info__name}>{film.name}</Row>
 					<Row className={styles.search_item__info__country_year}>
-						<span className={styles.search_item__info__country}>
+						<Text
+							className={styles['search_item__info__country']}
+							size='s6'
+							weight='light'
+							maxLines={1}
+						>
 							{film.year}, {film.country}
-						</span>
-						<span className={styles.search_item__info__year}>{film.genre}</span>
+						</Text>
+						<Text
+							className={styles['search-item__info__year']}
+							size='s6'
+							weight='light'
+							maxLines={1}
+						>
+							{film.genre}
+						</Text>
 					</Row>
 				</Col>
 			</Row>

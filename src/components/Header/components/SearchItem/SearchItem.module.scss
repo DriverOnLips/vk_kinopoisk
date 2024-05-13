@@ -28,14 +28,9 @@
 			justify-content: space-between;
 			margin-right: 0;
 
-			.search_item__info__country {
-				width: auto;
-				font-size: $size6;
-			}
-
+			.search_item__info__country,
 			.search-item__info__year {
-				width: auto;
-				font-size: $size6;
+				text-wrap: wrap;
 			}
 		}
 	}

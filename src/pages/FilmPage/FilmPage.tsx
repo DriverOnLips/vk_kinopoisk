@@ -2,7 +2,9 @@ import cn from 'classnames';
 import React, { useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
+import background from 'assets/img/background.png';
 import Gallery from 'components/Gallery/Gallery';
+import Text from 'components/Text/Text';
 import { useFilmPage } from 'hooks/useFilmPage';
 import { Meta } from 'utils/meta';
 import FilmPagePlaceholder from './components/Placeholder/FilmPagePlaceholder';
@@ -23,12 +25,27 @@ const FilmPage: React.FC = () => {
 	};
 
 	useEffect(() => {
+		if (film?.photo) {
+			document.body.style.setProperty(
+				'--background-image',
+				`url(${film.photo})`,
+			);
+		}
+	}, [meta]);
+
+	useEffect(() => {
 		loadFilm();
-		document.body.style.background = 'none';
+		document.body.style.setProperty(
+			'--background-image',
+			`url(${film?.photo})`,
+		);
 
 		return () => {
 			deleteFilm();
-			document.body.style.background = '';
+			document.body.style.setProperty(
+				'--background-image',
+				`url(${background})`,
+			);
 		};
 	}, [id]);
 
@@ -41,7 +58,7 @@ const FilmPage: React.FC = () => {
 				viewBox='0 0 360 336'
 				fill='none'
 				xmlns='http://www.w3.org/2000/svg'
-				onClick={() => navigate(-1)}
+				onClick={() => navigate('/')}
 			>
 				<path
 					d='M168 312L24 168L168 24M44 168H336'
@@ -68,11 +85,13 @@ const FilmPage: React.FC = () => {
 							className={styles['film_page__film_info-div']}
 						>
 							<div className={styles['film_page__film_info-div__about']}>
-								<span
+								<Text
 									className={styles['film_page__film_info-div__about__name']}
+									size='s3'
+									text_align='center'
 								>
 									{film?.name}
-								</span>
+								</Text>
 
 								<Row
 									className={cn(
@@ -87,13 +106,15 @@ const FilmPage: React.FC = () => {
 										}
 										style={{ padding: '0' }}
 									>
-										<span
+										<Text
 											className={
 												styles['film_page__film_info-div__about__country']
 											}
+											size='s4'
+											weight='light'
 										>
 											{film?.country}, {film?.year}
-										</span>
+										</Text>
 									</Col>
 									<Col
 										sm={6}
@@ -102,25 +123,27 @@ const FilmPage: React.FC = () => {
 										}
 										style={{ padding: '0' }}
 									>
-										<span
+										<Text
 											className={
 												styles['film_page__film_info-div__about__genres']
 											}
+											size='s4'
+											weight='light'
+											text_align='end'
 										>
 											{film?.genre}
-										</span>
+										</Text>
 									</Col>
 								</Row>
 
 								<Row className='mb-4'>
 									<Col>
-										<span
-											className={
-												styles['film_page__film_info-div__about__description']
-											}
+										<Text
+											size='s4'
+											weight='light'
 										>
 											{film?.description}
-										</span>
+										</Text>
 									</Col>
 								</Row>
 								<Row
@@ -133,13 +156,15 @@ const FilmPage: React.FC = () => {
 										sm={6}
 										style={{ padding: '0' }}
 									>
-										<span
+										<Text
 											className={
 												styles['film_page__film_info-div__about__rating']
 											}
+											size='s4'
+											weight='light'
 										>
 											Рейтинг: {Math.round(film!.rating * 100) / 100}
-										</span>
+										</Text>
 									</Col>
 								</Row>
 							</div>
