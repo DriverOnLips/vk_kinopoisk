@@ -69,12 +69,12 @@
 		&__reviews {
 			&-span {
 				text-align: center;
-				font-size: $size3;
+				font-size: var(--size3);
 			}
 
 			&__no_reviews-span {
 				text-align: center;
-				font-size: $size4;
+				font-size: var(--size4);
 			}
 		}
 
@@ -83,12 +83,12 @@
 
 			&-span {
 				text-align: center;
-				font-size: $size3;
+				font-size: var(--size3);
 			}
 
 			&__no_similar-span {
 				text-align: center;
-				font-size: $size4;
+				font-size: var(--size4);
 			}
 		}
 	}

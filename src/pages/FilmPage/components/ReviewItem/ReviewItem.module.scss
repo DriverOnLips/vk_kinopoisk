@@ -2,14 +2,14 @@
 
 .review_item {
 	&__title {
-		font-size: $size5;
+		font-size: var(--size5);
 	}
 
 	&__type,
 	&__text,
 	&__username,
 	&__date {
-		font-size: $size6;
+		font-size: --size6;
 	}
 
 	&__text {

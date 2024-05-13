@@ -25,11 +25,5 @@ div {
 }
 
 button {
-	font-size: $size6 !important;
-}
-
-@media screen and (max-width: 330px) {
-	button {
-		font-size: $size6 !important;
-	}
+	font-size: var(--size6) !important;
 }

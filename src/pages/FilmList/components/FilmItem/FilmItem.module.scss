@@ -23,7 +23,7 @@
 
 		&__title {
 			text-align: center;
-			font-size: $size3;
+			font-size: var(--size3);
 		}
 
 		&__details {
@@ -35,7 +35,7 @@
 		}
 
 		&-text {
-			font-size: $size6;
+			font-size: var(--size6);
 			margin: 0;
 		}
 
@@ -48,7 +48,7 @@
 @media screen and (max-width: 1200px) {
 	.film_item-card {
 		.film_title {
-			font-size: $size4;
+			font-size: var(--size4);
 		}
 	}
 }
@@ -62,11 +62,11 @@
 @media screen and (max-width: 330px) {
 	.film_item-card {
 		.film_title {
-			font-size: $size5;
+			font-size: var(--size5);
 		}
 
 		.film_details-text {
-			font-size: $size7;
+			font-size: var(--size7);
 		}
 	}
 }
