@@ -39,6 +39,8 @@ const MultiDropdown: React.FC<MultiDropdownProps<any>> = ({
 						name='multidropdownSelection'
 						disabled
 					/>
+					{/* Так можно проверить */}
+					{/* <span>{(item.state.toString() == 'true').toString()}</span>  */}
 				</Dropdown.Item>
 			))}
 		</DropdownButton>

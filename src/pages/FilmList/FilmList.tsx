@@ -35,14 +35,6 @@ const FilmsList: React.FC = () => {
 	const setSearch = useCallback(
 		(param: string, value: number | string) => {
 			const newSearchParams = new URLSearchParams(location.search);
-			if (param === 'age' || param === 'country') {
-				newSearchParams.set(param, String(value));
-				newSearchParams.set('page', '1');
-				navigate(`?${newSearchParams.toString()}`, { replace: true });
-
-				return;
-			}
-
 			newSearchParams.set(param, String(value));
 			navigate(`?${newSearchParams.toString()}`, { replace: true });
 		},
@@ -54,9 +46,8 @@ const FilmsList: React.FC = () => {
 			e.preventDefault();
 
 			setSearch('country', country.name);
-			setPage(1);
 		},
-		[setSearch, setPage],
+		[setSearch],
 	);
 
 	const onAgeSelect = useCallback(
@@ -64,9 +55,8 @@ const FilmsList: React.FC = () => {
 			e.preventDefault();
 
 			setSearch('age', age.age);
-			setPage(1);
 		},
-		[setSearch, setPage],
+		[setSearch],
 	);
 
 	const onPaginationClick = useCallback(
@@ -93,9 +83,7 @@ const FilmsList: React.FC = () => {
 		loadedFromUrl ? setLoaded(true) : setSearch('loaded', 'true');
 
 		const pageFromUrl = getParam('page');
-		pageFromUrl && +pageFromUrl !== 1
-			? setPage(+pageFromUrl)
-			: setSearch('page', page);
+		pageFromUrl ? setPage(+pageFromUrl) : setSearch('page', page);
 
 		const ageFromUrl = getParam('age');
 		ageFromUrl ? setFilmAge(+ageFromUrl) : setSearch('age', getFilmAge());

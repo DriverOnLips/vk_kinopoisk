@@ -38,9 +38,6 @@ export const useFilmList = () => {
 
 		dispatch(SetMeta(Meta.loading));
 
-		// const ageRating =
-		// 	filmAge === 0 ? undefined : filmAge !== 18 ? `0-${filmAge}` : '18';
-
 		const age = filmAge.find((a) => a.state === true);
 		const ageParam =
 			!age || age.age === 0

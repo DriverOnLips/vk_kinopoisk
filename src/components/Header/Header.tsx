@@ -10,7 +10,7 @@ function Header() {
 	const onLogoClick = useCallback(() => {
 		closeButtonRef?.current?.getElementsByTagName('button')[0].click();
 
-		navigate('/');
+		navigate('/?country=Все+страны&age=0&page=1');
 	}, [navigate]);
 
 	return (
