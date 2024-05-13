@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const MainPageRedirect = () => {
+const MainPageRedirect = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -11,3 +11,5 @@ export const MainPageRedirect = () => {
 
 	return null;
 };
+
+export default memo(MainPageRedirect);

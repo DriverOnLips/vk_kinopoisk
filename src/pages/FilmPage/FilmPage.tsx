@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import Gallery from 'components/Gallery/Gallery';
@@ -16,6 +16,8 @@ const FilmPage: React.FC = () => {
 	const { id } = useParams();
 	const { meta, film, setFilm, deleteFilm } = useFilmPage();
 	const navigate = useNavigate();
+
+	const onBackButtonClick = useCallback(() => navigate('/'), [navigate]);
 
 	const loadFilm = async () => {
 		if (id) {
@@ -42,7 +44,7 @@ const FilmPage: React.FC = () => {
 				viewBox='0 0 360 336'
 				fill='none'
 				xmlns='http://www.w3.org/2000/svg'
-				onClick={() => navigate('/')}
+				onClick={onBackButtonClick}
 			>
 				<path
 					d='M168 312L24 168L168 24M44 168H336'

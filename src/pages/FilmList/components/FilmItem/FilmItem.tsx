@@ -10,7 +10,7 @@ const FilmItem: React.FC<{
 }> = ({ film }) => {
 	const navigate = useNavigate();
 
-	const handleClick = useCallback(
+	const onClick = useCallback(
 		(movieId: number) => () => {
 			navigate(`/film/${movieId}`);
 		},
@@ -21,7 +21,7 @@ const FilmItem: React.FC<{
 		<Card
 			className={styles['film_item-card']}
 			id={String(film.id)}
-			onClick={handleClick(film.id)}
+			onClick={onClick(film.id)}
 		>
 			<Card.Img
 				className={styles['film_item-card__img']}

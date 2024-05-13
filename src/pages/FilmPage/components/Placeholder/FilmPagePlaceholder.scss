@@ -10,7 +10,7 @@
 	.film_info-placeholder__photo-img {
 		display: flex;
 		width: 100%;
-		aspect-ratio: 5 / 5;
+		aspect-ratio: 5 / 6;
 		background: gray;
 	}
 
@@ -29,10 +29,14 @@
 	}
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 800px) {
 	.film_info-placeholder {
 		.film_info-placeholder__photo {
 			display: none;
+		}
+
+		.film_info-placeholder-div {
+			width: 100% !important;
 		}
 	}
 }

@@ -53,11 +53,13 @@ const SimilarFilms: React.FC<{
 					</Col>
 				))}
 			</Row>
-			<Paginator
-				page={page}
-				pages={Math.ceil(movies?.length / 6)}
-				onClick={onPaginationChange}
-			/>
+			{movies?.length > 6 && (
+				<Paginator
+					page={page}
+					pages={Math.ceil(movies?.length / 6)}
+					onClick={onPaginationChange}
+				/>
+			)}
 		</Container>
 	);
 };

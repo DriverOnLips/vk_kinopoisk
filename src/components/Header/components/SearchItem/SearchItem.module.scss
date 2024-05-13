@@ -35,29 +35,3 @@
 		}
 	}
 }
-
-@media screen and (max-width: 815px) {
-	.search-item {
-		.search-item__photo {
-			width: 60px;
-		}
-
-		.search-item__info {
-			max-width: 68%;
-
-			.search-item__info__name {
-				font-size: $size7;
-			}
-
-			.search-item__info__country_year {
-				.search-item__info__country {
-					font-size: $size7;
-				}
-
-				.search-item__info__year {
-					font-size: $size7;
-				}
-			}
-		}
-	}
-}

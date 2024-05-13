@@ -6,7 +6,7 @@ import ico from 'assets/ico/logo.ico';
 import Header from 'components/Header/Header';
 import FilmList from 'pages/FilmList/FilmList';
 import FilmPage from 'pages/FilmPage/FilmPage';
-import { MainPageRedirect } from 'pages/MainPageRedirect/MainPageRedirect';
+import MainPageRedirect from 'pages/MainPageRedirect/MainPageRedirect';
 import 'styles/index.scss';
 
 const App = () => {

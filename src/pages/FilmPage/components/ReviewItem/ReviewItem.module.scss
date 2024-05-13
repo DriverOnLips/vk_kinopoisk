@@ -13,7 +13,7 @@
 	}
 
 	&__text {
-		max-height: 200px;
+		max-height: 400px;
 		overflow: auto;
 	}
 
@@ -22,18 +22,3 @@
 		padding: 0;
 	}
 }
-
-// @media screen and (max-width: 800px) {
-// 	.review_item {
-// 		.review_title {
-// 			font-size: $size6;
-// 		}
-
-// 		.review_type,
-// 		.review_text,
-// 		.review_username,
-// 		.review_date {
-// 			font-size: $size7;
-// 		}
-// 	}
-// }
