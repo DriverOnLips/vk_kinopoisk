@@ -20,8 +20,24 @@ body {
 	background-position: center;
 }
 
+.virtualized_list::-webkit-scrollbar {
+	width: 14px;
+}
+
+.virtualized_list::-webkit-scrollbar-track {
+	background: $color-gray;
+	border-radius: 20px;
+	border: 3px solid $color-gray;
+}
+
+.virtualized_list::-webkit-scrollbar-thumb {
+	background-color: $color-secondary;
+	border-radius: 20px;
+	border: 3px solid $color-gray;
+}
+
 div {
-	color: $text-color;
+	color: $text-color-primary;
 }
 
 button {

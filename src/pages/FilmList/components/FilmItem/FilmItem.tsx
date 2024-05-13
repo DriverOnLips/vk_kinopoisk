@@ -1,7 +1,7 @@
-import cn from 'classnames';
 import React, { useCallback } from 'react';
 import { Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Text from 'components/Text/Text';
 import { FilmFromListModel } from 'types/FilmFromList';
 import styles from './FilmItem.module.scss';
 
@@ -33,26 +33,51 @@ const FilmItem: React.FC<{
 				}}
 			/>
 			<Card.Body className={styles['film_item-card__body']}>
-				<Card.Title
-					className={cn(styles['film_item-card__body__title'], 'mb-3')}
+				<Text
+					className={styles['film_item-card__body__title']}
+					color='secondary'
+					size='s3'
+					text_align='center'
+					maxLines={2}
 				>
 					{film.name}
-				</Card.Title>
-				<div className={styles['film_item-card__body__details']}>
-					<Card.Text className={styles['film_item-card__body__details-text']}>
-						{film.description}
-					</Card.Text>
-					<Card.Text className={styles['film_item-card__body__details-text']}>
-						Рейтинг: {Math.round(film.rating * 100) / 100}
-					</Card.Text>
-					<Card.Text
-						className={cn(
-							styles['film_item-card__body__details-text'],
-							styles['film_item-card__body__details-text-right'],
-						)}
+				</Text>
+				<div className={styles['film_item-card__body']}>
+					<Text
+						color='secondary'
+						size='s5'
+						weight='light'
+						text_align='center'
+						maxLines={3}
 					>
-						{film.genre}, {film.year}
-					</Card.Text>
+						{film.description}
+					</Text>
+					<div className={styles['film_item-card__body__details']}>
+						<Text
+							className={styles['film_item-card__body__details-text']}
+							color='secondary'
+							size='s6'
+							weight='light'
+							text_align='start'
+							maxLines={2}
+						>
+							Рейтинг: {Math.round(film.rating * 100) / 100}
+						</Text>
+						{/* <Card.Text className={styles['film_item-card__body__details-text']}>
+							Рейтинг: {Math.round(film.rating * 100) / 100}
+						</Card.Text> */}
+
+						<Text
+							className={styles['film_item-card__body__details-text']}
+							color='secondary'
+							size='s6'
+							weight='light'
+							text_align='end'
+							maxLines={2}
+						>
+							{film.genre}, {film.year}
+						</Text>
+					</div>
 				</div>
 			</Card.Body>
 		</Card>

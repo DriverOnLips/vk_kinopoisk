@@ -23,10 +23,11 @@ export class Api {
 		// this.token = 'FBZJA82-T40M4XZ-G2W29WD-V4DE583';
 		// this.token = '5M9EE5M-6AB4RSG-KKM19X2-HSJAX8Q';
 		// this.token = 'T2XXF72-5AXMJ6Y-N8AX3BT-ACBEVAH';
-		this.token = 'ZX8ZGSZ-PYTM11R-NYKBY15-J29FXHB';
+		// this.token = 'ZX8ZGSZ-PYTM11R-NYKBY15-J29FXHB';
 		// this.token = 'R87RDPM-TD7M6QG-QHAPQD3-JP4QTNR';
 		// this.token = 'S16XGSJ-47W4Q74-KB17YZW-KNXXDX1';
-		// this.token = 'M8N0857-CA1M35T-MN9WZFD-Q2V2F7T';
+		this.token = 'M8N0857-CA1M35T-MN9WZFD-Q2V2F7T';
+		// this.token = '9X3J4TC-EZGMW06-NG0X7JS-RANMTR3';
 
 		this.axiosInstance = axios.create({
 			baseURL: 'https://api.kinopoisk.dev/v1.4/',

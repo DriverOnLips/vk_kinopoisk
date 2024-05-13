@@ -19,7 +19,14 @@ const FilmsList: React.FC = () => {
 	const [loaded, setLoaded] = useState<boolean>(false);
 	const { meta, films, setFilms, deleteFilms } = useFilmList();
 	const { page, pages, setPage } = usePage();
-	const { filmAge, filmCountry, setFilmAge, setFilmCountry } = useFilter();
+	const {
+		filmAge,
+		filmCountry,
+		setFilmAge,
+		setFilmCountry,
+		getFilmAge,
+		getFilmCountry,
+	} = useFilter();
 	const { params, getParam } = useQueryParams();
 
 	const navigate = useNavigate();
@@ -47,8 +54,9 @@ const FilmsList: React.FC = () => {
 			e.preventDefault();
 
 			setSearch('country', country.name);
+			setPage(1);
 		},
-		[setSearch],
+		[setSearch, setPage],
 	);
 
 	const onAgeSelect = useCallback(
@@ -56,8 +64,9 @@ const FilmsList: React.FC = () => {
 			e.preventDefault();
 
 			setSearch('age', age.age);
+			setPage(1);
 		},
-		[setSearch],
+		[setSearch, setPage],
 	);
 
 	const onPaginationClick = useCallback(
@@ -81,22 +90,20 @@ const FilmsList: React.FC = () => {
 
 	useEffect(() => {
 		const loadedFromUrl = getParam('loaded');
-		if (loadedFromUrl) {
-			setLoaded(true);
-		} else {
-			setSearch('loaded', 'true');
-		}
+		loadedFromUrl ? setLoaded(true) : setSearch('loaded', 'true');
 
 		const pageFromUrl = getParam('page');
-		pageFromUrl && setPage(+pageFromUrl);
+		pageFromUrl && +pageFromUrl !== 1
+			? setPage(+pageFromUrl)
+			: setSearch('page', page);
 
 		const ageFromUrl = getParam('age');
-		ageFromUrl && setFilmAge(+ageFromUrl);
+		ageFromUrl ? setFilmAge(+ageFromUrl) : setSearch('age', getFilmAge());
 
 		const countryFromUrl = getParam('country');
-		if (countryFromUrl && typeof countryFromUrl === 'string') {
-			setFilmCountry(countryFromUrl);
-		}
+		countryFromUrl && typeof countryFromUrl === 'string'
+			? setFilmCountry(countryFromUrl)
+			: setSearch('country', getFilmCountry());
 	}, [params]);
 
 	return (

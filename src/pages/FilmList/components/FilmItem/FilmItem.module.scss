@@ -1,9 +1,10 @@
 @import "styles/vars.scss";
 
 .film_item-card {
-	width: 28vw;
-	height: calc(100% - 100px);
+	width: 90%;
+	height: calc(100% - 50px);
 	cursor: pointer;
+	position: relative;
 
 	> iframe {
 		width: 100%;
@@ -19,54 +20,28 @@
 	&__body {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
 
 		&__title {
-			text-align: center;
-			font-size: var(--size3);
+			margin-bottom: 0.75rem;
 		}
 
 		&__details {
+			position: absolute;
+			bottom: 10px;
+			width: calc(100% - 30px);
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 			color: black;
 			gap: 1rem;
-		}
 
-		&-text {
-			font-size: var(--size6);
-			margin: 0;
+			&-text {
+				max-width: 50%;
+			}
 		}
 
 		&-text_right {
 			text-align: right;
-		}
-	}
-}
-
-@media screen and (max-width: 1200px) {
-	.film_item-card {
-		.film_title {
-			font-size: var(--size4);
-		}
-	}
-}
-
-@media screen and (max-width: 600px) {
-	.film_item-card {
-		width: 65vw;
-	}
-}
-
-@media screen and (max-width: 330px) {
-	.film_item-card {
-		.film_title {
-			font-size: var(--size5);
-		}
-
-		.film_details-text {
-			font-size: var(--size7);
 		}
 	}
 }
